@@ -2,6 +2,7 @@
   "name": "material-ui-cra",
   "version": "5.0.0",
   "private": true,
+  "homepage": "https://sourabhjaz.github.io/upskill-club-web/",
   "scripts": {
     "start": "react-scripts start",
     "build": "BUILD_PATH='./docs' react-scripts build",
