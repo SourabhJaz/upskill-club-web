@@ -94,7 +94,7 @@ function Author({ authors }) {
             <Avatar
               key={index}
               alt={author.name}
-              src={author.avatar}
+              src={author.thumbnail}
               sx={{ width: 24, height: 24 }}
             />
           ))}
@@ -146,6 +146,7 @@ export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
   const [categories, setCategories] = React.useState([defaultCategory]);
   const [selectedCategory, selectCategory] = React.useState(defaultCategory.id);
+  const [courses, setCourses] = React.useState([]);
   React.useEffect(() => {
       const populateCategories = async() => {
         try {    
@@ -160,17 +161,17 @@ export default function MainContent() {
   }, []);
 
   React.useEffect(() => {
-    const populateCategories = async() => {
+    const populateCourses = async() => {
       try {
         const queryString = selectedCategory>0?`?category=${selectedCategory}`:'';
         const response = await fetch(`https://sourabhjaz.pythonanywhere.com/api/course${queryString}`);
-        const parsedResponse = await response.json();  
-        console.log(parsedResponse)
+        const parsedResponse = await response.json(); 
+        setCourses(parsedResponse.results)
       } catch (err) {
         console.log(err);
       }
     }
-    populateCategories();
+    populateCourses();
   }, [selectedCategory]);
 
   const handleFocus = (index) => {
@@ -281,38 +282,41 @@ export default function MainContent() {
             <Author authors={cardData[0].authors} />
           </SyledCard>
         </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(1)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 1 ? 'Mui-focused' : ''}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[1].img}
-              aspect-ratio="16 / 9"
-              sx={{
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[1].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[1].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[1].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[1].authors} />
-          </SyledCard>
-        </Grid>
+        {courses.map((course) => {
+          return (<Grid size={{ xs: 12, md: 6 }}>
+            <SyledCard
+              variant="outlined"
+              onFocus={() => handleFocus(1)}
+              onBlur={handleBlur}
+              tabIndex={0}
+              className={focusedCardIndex === 2 ? 'Mui-focused' : ''}
+            >
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                image={course.image}
+                aspect-ratio="16 / 9"
+                sx={{
+                  borderBottom: '1px solid',
+                  borderColor: 'divider',
+                }}
+              />
+              <SyledCardContent>
+                <Typography gutterBottom variant="caption" component="div">
+                  {course.category.name}
+                </Typography>
+                <Typography gutterBottom variant="h6" component="div">
+                  {course.title}
+                </Typography>
+                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                  {course.outline}
+                </StyledTypography>
+              </SyledCardContent>
+              <Author authors={[course.author]} />
+            </SyledCard>
+          </Grid>)
+          }
+        )}
       </Grid>
     </Box>
   );
