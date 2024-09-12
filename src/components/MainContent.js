@@ -8,14 +8,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid2';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
+
 
 const cardData = [
   {
@@ -140,18 +139,51 @@ export function Search() {
 }
 
 export default function MainContent() {
+  const defaultCategory = {
+    id: 0,
+    name: 'ALL CATEGORIES'
+  };
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
+  const [categories, setCategories] = React.useState([defaultCategory]);
+  const [selectedCategory, selectCategory] = React.useState(defaultCategory.id);
+  React.useEffect(() => {
+      const populateCategories = async() => {
+        try {    
+          const response = await fetch('https://sourabhjaz.pythonanywhere.com/api/category/');
+          const parsedResponse = await response.json();  
+          setCategories([defaultCategory, ...parsedResponse.results])
+        } catch (err) {
+      console.log(err);
+      }
+    }
+    populateCategories();
+  }, []);
+
+  React.useEffect(() => {
+    const populateCategories = async() => {
+      try {
+        const queryString = selectedCategory>0?`?category=${selectedCategory}`:'';
+        const response = await fetch(`https://sourabhjaz.pythonanywhere.com/api/course${queryString}`);
+        const parsedResponse = await response.json();  
+        console.log(parsedResponse)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    populateCategories();
+  }, [selectedCategory]);
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
+    console.log(`focussed on {index}`)
   };
 
   const handleBlur = () => {
     setFocusedCardIndex(null);
   };
 
-  const handleClick = () => {
-    console.info('You clicked the filter chip.');
+  const handleClick = (index) => {
+    selectCategory(index);
   };
 
   return (
@@ -194,43 +226,15 @@ export default function MainContent() {
             overflow: 'auto',
           }}
         >
-          <Chip onClick={handleClick} size="medium" label="All categories" />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Tech"
+          {categories.map((category) => {
+            return (<Chip key={category.id} onClick={handleClick.bind(this, category.id)} size="medium" 
             sx={{
-              backgroundColor: 'transparent',
               border: 'none',
             }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Health"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Leadership"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Finance"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
+            variant={category.id == selectedCategory?'filled':'outlined'}
+            clickable
+            label={category.name} />)
+          })}
         </Box>
         <Box
           sx={{
