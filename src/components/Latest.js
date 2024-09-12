@@ -11,7 +11,7 @@ import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 
 const articleInfo = [
   {
-    tag: 'Engineering',
+    tag: 'Practical System Design',
     title: 'The future of AI in software engineering',
     description:
       'Artificial intelligence is revolutionizing software engineering. Explore how AI-driven tools are enhancing development processes and improving software quality.',
@@ -21,7 +21,7 @@ const articleInfo = [
     ],
   },
   {
-    tag: 'Product',
+    tag: 'Domain Modelling',
     title: 'Driving growth with user-centric product design',
     description:
       'Our user-centric product design approach is driving significant growth. Learn about the strategies we employ to create products that resonate with users.',
@@ -192,7 +192,7 @@ export default function Latest() {
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        Latest
+        Latest Sessions
       </Typography>
       <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
         {articleInfo.map((article, index) => (

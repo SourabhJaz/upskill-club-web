@@ -36,7 +36,7 @@ export default function AppAppBar() {
 
   return (
     <AppBar
-      position="fixed"
+      position="absolute"
       sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 10 }}
     >
       <Container maxWidth="lg">
