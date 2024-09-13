@@ -110,7 +110,6 @@ export function Search({ onSearch }) {
   const [searchItem, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    console.log(searchItem);
   };
   const handleKeyDown = (event) => {
     if(event.keyCode == 13)
@@ -174,7 +173,7 @@ export default function MainContent() {
           url.searchParams.append('search', searchItem);
         }
         if (selectedCategory) {
-          url.searchParams.append('selectedCategory', selectedCategory);
+          url.searchParams.append('category', selectedCategory);
         }
         const response = await fetch(url.toString());
         const parsedResponse = await response.json(); 
@@ -188,7 +187,6 @@ export default function MainContent() {
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
-    console.log(`focussed on {index}`)
   };
 
   const handleBlur = () => {
@@ -199,7 +197,6 @@ export default function MainContent() {
     selectCategory(index);
   };
   const handleSearch = (term) => {
-    console.log(`You searched ${term}`);
     setSearchItem(term);
   };
   
