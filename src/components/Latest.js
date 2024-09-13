@@ -108,9 +108,10 @@ export default function Latest({ courseId, title }) {
     const offset = (page - 1) * 10;
     const response = await UpskillClubApi.getSessions({ offset, courseId });
     if (!response.success) {
-      return;
+      return undefined;
     }
-    const articles = response.data.results.map((article) => ({
+    const { data } = response;
+    const articles = data.results.map((article) => ({
       tag: article.course.title,
       title: article.title,
       description: article.outline,
@@ -123,7 +124,7 @@ export default function Latest({ courseId, title }) {
       createdAt: article.created_at,
     }));
     setArticleInfo(articles);
-    setTotalCount(response.data.count);
+    setTotalCount(data.count);
   };
 
   React.useEffect(() => {

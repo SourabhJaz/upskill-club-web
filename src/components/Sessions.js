@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
+import { UpskillClubApi } from '../apis';
 
 const StyledCard = styled(Card)({
   display: 'flex',
@@ -32,29 +33,25 @@ export default function Sessions({ courseId }) {
 
   React.useEffect(() => {
     const fetchSessions = async () => {
-      try {
-        const url = new URL('https://sourabhjaz.pythonanywhere.com/api/session');
-        url.searchParams.append('page', page);
-        if (courseId) {
-          url.searchParams.append('course', courseId);
-        }
-        const response = await fetch(url.toString());
-        const data = await response.json();
-        const sessions = data.results.map(article => ({
-          tag: article.course.title,
-          title: article.title,
-          description: article.outline,
-          authors: [{
+      const response = await UpskillClubApi.getSessions({ page, courseId });
+      if (!response.success) {
+        return undefined;
+      }
+      const { data } = response;
+      const sessions = data.results.map((article) => ({
+        tag: article.course.title,
+        title: article.title,
+        description: article.outline,
+        authors: [
+          {
             name: article.course.author.name,
             avatar: article.course.author.thumbnail || '/static/images/avatar/default.jpg',
-          }],
-          createdAt: article.created_at,
-        }));  
-        setSessions(sessions);
-        setTotalPages(data.total_pages); // Adjust according to your API's pagination response
-      } catch (err) {
-        console.log(err);
-      }
+          },
+        ],
+        createdAt: article.created_at,
+      }));
+      setSessions(sessions);
+      setTotalPages(data.total_pages); // Adjust according to your API's pagination response
     };
     fetchSessions();
   }, [courseId, page]);
