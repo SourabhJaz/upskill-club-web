@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { UpskillClubApi } from '../apis';
 
 // Styling components
 const StyledTypography = styled(Typography)({
@@ -104,30 +105,25 @@ export default function Latest({ courseId, title }) {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
 
   const fetchArticleInfo = async (page = 1) => {
-    try {
-      const offset = (page - 1) * 10;
-      const url = new URL('https://sourabhjaz.pythonanywhere.com/api/session');
-      url.searchParams.append('offset', offset);
-      if (courseId) {
-        url.searchParams.append('course', courseId);
-      }
-      const response = await fetch(url.toString());
-      const data = await response.json();
-      const articles = data.results.map(article => ({
-        tag: article.course.title,
-        title: article.title,
-        description: article.outline,
-        authors: [{
+    const offset = (page - 1) * 10;
+    const response = await UpskillClubApi.getSessions({ offset, courseId });
+    if (!response.success) {
+      return;
+    }
+    const articles = response.data.results.map((article) => ({
+      tag: article.course.title,
+      title: article.title,
+      description: article.outline,
+      authors: [
+        {
           name: article.course.author.name,
           avatar: article.course.author.thumbnail || '/static/images/avatar/default.jpg',
-        }],
-        createdAt: article.created_at,
-      }));
-      setArticleInfo(articles);
-      setTotalCount(data.count);
-    } catch (err) {
-      console.log(err);
-    }
+        },
+      ],
+      createdAt: article.created_at,
+    }));
+    setArticleInfo(articles);
+    setTotalCount(response.data.count);
   };
 
   React.useEffect(() => {
