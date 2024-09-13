@@ -1,6 +1,0 @@
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/prefer-default-export": "off"  // Disable the rule if not needed
-  }
-}
