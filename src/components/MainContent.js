@@ -14,29 +14,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-
-
-const cardData = [
-  {
-    img: 'https://picsum.photos/800/450?random=1',
-    tag: 'Engineering',
-    title: 'Revolutionizing software development with cutting-edge tools',
-    description:
-      'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-    authors: [
-      { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-      { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
-    ],
-  },
-  {
-    img: 'https://picsum.photos/800/450?random=6',
-    tag: 'Product',
-    title: 'Maximizing efficiency with our latest product updates',
-    description:
-      'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
-    authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
-  },
-];
+import { useNavigate } from 'react-router-dom';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -74,7 +52,18 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-function Author({ authors }) {
+const getFormattedDate = (dateStr) => {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const dateObj = new Date(dateStr);
+  return dateObj.toLocaleDateString('en-US', options)
+}
+
+function Author({ authors, createdAt }) {
   return (
     <Box
       sx={{
@@ -103,7 +92,7 @@ function Author({ authors }) {
           {authors.map((author) => author.name).join(', ')}
         </Typography>
       </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
+      <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
     </Box>
   );
 }
@@ -147,6 +136,8 @@ export default function MainContent() {
   const [categories, setCategories] = React.useState([defaultCategory]);
   const [selectedCategory, selectCategory] = React.useState(defaultCategory.id);
   const [courses, setCourses] = React.useState([]);
+  const navigate = useNavigate();
+  
   React.useEffect(() => {
       const populateCategories = async() => {
         try {    
@@ -185,6 +176,10 @@ export default function MainContent() {
 
   const handleClick = (index) => {
     selectCategory(index);
+  };
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/course/${courseId}`); // Navigate to the course details page
   };
 
   return (
@@ -250,46 +245,14 @@ export default function MainContent() {
         </Box>
       </Box>
       <Grid container spacing={2} columns={12}>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(0)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[0].img}
-              aspect-ratio="16 / 9"
-              sx={{
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[0].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[0].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[0].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[0].authors} />
-          </SyledCard>
-        </Grid>
         {courses.map((course) => {
-          return (<Grid size={{ xs: 12, md: 6 }}>
+          return (<Grid size={{ xs: 12, md: 6 }} key={course.id}>
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(1)}
               onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 2 ? 'Mui-focused' : ''}
+              onClick={() => handleCourseClick(course.id)} // Navigate to course details page
+              className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
             >
               <CardMedia
                 component="img"
@@ -297,6 +260,9 @@ export default function MainContent() {
                 image={course.image}
                 aspect-ratio="16 / 9"
                 sx={{
+                  width: '100%',
+                  height: 325,
+                  objectFit: 'cover',
                   borderBottom: '1px solid',
                   borderColor: 'divider',
                 }}
@@ -312,7 +278,7 @@ export default function MainContent() {
                   {course.outline}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={[course.author]} />
+              <Author authors={[course.author]} createdAt={course.created_at} />
             </SyledCard>
           </Grid>)
           }
