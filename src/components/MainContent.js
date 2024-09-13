@@ -15,6 +15,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
+import { UpskillClub } from '../apis';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -153,35 +154,22 @@ export default function MainContent() {
   const navigate = useNavigate();
   
   React.useEffect(() => {
-      const populateCategories = async() => {
-        try {    
-          const response = await fetch('https://sourabhjaz.pythonanywhere.com/api/category/');
-          const parsedResponse = await response.json();  
-          setCategories([defaultCategory, ...parsedResponse.results])
-        } catch (err) {
-      console.log(err);
+    const populateCategories = async () => {
+      const response = await UpskillClub.getCategories();
+      if (response.success) {
+        setCategories([defaultCategory, ...response.data.results]);
       }
-    }
+    };
     populateCategories();
   }, []);
 
   React.useEffect(() => {
-    const populateCourses = async() => {
-      try {
-        const url = new URL('https://sourabhjaz.pythonanywhere.com/api/course');
-        if(searchItem) {
-          url.searchParams.append('search', searchItem);
-        }
-        if (selectedCategory) {
-          url.searchParams.append('category', selectedCategory);
-        }
-        const response = await fetch(url.toString());
-        const parsedResponse = await response.json(); 
-        setCourses(parsedResponse.results);
-      } catch (err) {
-        console.log(err);
+    const populateCourses = async () => {
+      const response = await UpskillClub.getCourses({ searchItem, category: selectedCategory });
+      if (response.success) {
+        setCourses(response.data.results);
       }
-    }
+    };
     populateCourses();
   }, [selectedCategory, searchItem]);
 
