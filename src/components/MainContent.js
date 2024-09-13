@@ -15,7 +15,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
-import { UpskillClub } from '../apis';
+import { UpskillClubApi } from '../apis';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -155,7 +155,7 @@ export default function MainContent() {
   
   React.useEffect(() => {
     const populateCategories = async () => {
-      const response = await UpskillClub.getCategories();
+      const response = await UpskillClubApi.getCategories();
       if (response.success) {
         setCategories([defaultCategory, ...response.data.results]);
       }
@@ -165,7 +165,7 @@ export default function MainContent() {
 
   React.useEffect(() => {
     const populateCourses = async () => {
-      const response = await UpskillClub.getCourses({ searchItem, category: selectedCategory });
+      const response = await UpskillClubApi.getCourses({ searchItem, category: selectedCategory });
       if (response.success) {
         setCourses(response.data.results);
       }

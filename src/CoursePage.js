@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 import Latest from './components/Latest'; // Import the Sessions component
+import { UpskillClubApi } from './apis';
 
 const StyledCardMedia = styled(CardMedia)({
   height: 325,
@@ -23,12 +24,9 @@ export default function CoursePage() {
 
   React.useEffect(() => {
     const fetchCourse = async () => {
-      try {
-        const response = await fetch(`https://sourabhjaz.pythonanywhere.com/api/course/${id}`);
-        const data = await response.json();
-        setCourse(data);
-      } catch (err) {
-        console.log(err);
+      const response = await UpskillClubApi.getCourseById({ courseId: id });
+      if (response.success) {
+        setCourse(response.data);
       }
     };
     fetchCourse();

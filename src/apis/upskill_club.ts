@@ -1,7 +1,7 @@
 import { ApiCall } from '../common';
 import { UPSKILL_CLUB_SERVER_URL } from './constants';
 
-const UpskillClub = {
+const UpskillClubApi = {
   getCategories: async () => {
     return await ApiCall.doGet(`${UPSKILL_CLUB_SERVER_URL}/category/`);
   },
@@ -20,6 +20,12 @@ const UpskillClub = {
 
     return await ApiCall.doGet(url);
   },
+
+  getCourseById: async (params: { courseId: string }) => {
+    const { courseId } = params;
+
+    return await ApiCall.doGet(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
+  },
 };
 
-export { UpskillClub };
+export { UpskillClubApi };

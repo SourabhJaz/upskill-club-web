@@ -1,3 +1,3 @@
-import { UpskillClub } from './upskill_club';
+import { UpskillClubApi } from './upskill_club';
 
-export { UpskillClub };
+export { UpskillClubApi };
