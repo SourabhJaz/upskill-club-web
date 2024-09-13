@@ -106,7 +106,19 @@ Author.propTypes = {
   ).isRequired,
 };
 
-export function Search() {
+export function Search({ onSearch }) {
+  const [searchItem, setSearchTerm] = React.useState('');
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+    console.log(searchItem);
+  };
+  const handleKeyDown = (event) => {
+    if(event.keyCode == 13)
+      handleSearch();
+  }
+  const handleSearch = () => {
+    onSearch(searchItem);
+  };
   return (
     <FormControl sx={{ width: { xs: '100%', md: '25ch' } }} variant="outlined">
       <OutlinedInput
@@ -114,9 +126,11 @@ export function Search() {
         id="search"
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         startAdornment={
           <InputAdornment position="start" sx={{ color: 'text.primary' }}>
-            <SearchRoundedIcon fontSize="small" />
+            <SearchRoundedIcon fontSize="small" onClick={handleSearch} />
           </InputAdornment>
         }
         inputProps={{
@@ -136,6 +150,7 @@ export default function MainContent() {
   const [categories, setCategories] = React.useState([defaultCategory]);
   const [selectedCategory, selectCategory] = React.useState(defaultCategory.id);
   const [courses, setCourses] = React.useState([]);
+  const [searchItem, setSearchItem] = React.useState('');
   const navigate = useNavigate();
   
   React.useEffect(() => {
@@ -154,16 +169,22 @@ export default function MainContent() {
   React.useEffect(() => {
     const populateCourses = async() => {
       try {
-        const queryString = selectedCategory>0?`?category=${selectedCategory}`:'';
-        const response = await fetch(`https://sourabhjaz.pythonanywhere.com/api/course${queryString}`);
+        const url = new URL('https://sourabhjaz.pythonanywhere.com/api/course');
+        if(searchItem) {
+          url.searchParams.append('search', searchItem);
+        }
+        if (selectedCategory) {
+          url.searchParams.append('selectedCategory', selectedCategory);
+        }
+        const response = await fetch(url.toString());
         const parsedResponse = await response.json(); 
-        setCourses(parsedResponse.results)
+        setCourses(parsedResponse.results);
       } catch (err) {
         console.log(err);
       }
     }
     populateCourses();
-  }, [selectedCategory]);
+  }, [selectedCategory, searchItem]);
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
@@ -177,7 +198,11 @@ export default function MainContent() {
   const handleClick = (index) => {
     selectCategory(index);
   };
-
+  const handleSearch = (term) => {
+    console.log(`You searched ${term}`);
+    setSearchItem(term);
+  };
+  
   const handleCourseClick = (courseId) => {
     navigate(`/upskill-club-web/course/${courseId}`); // Navigate to the course details page
   };
@@ -241,7 +266,7 @@ export default function MainContent() {
             overflow: 'auto',
           }}
         >
-          <Search />
+          <Search onSearch={handleSearch} />
         </Box>
       </Box>
       <Grid container spacing={2} columns={12}>
