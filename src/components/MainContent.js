@@ -83,7 +83,7 @@ function Author({ authors, createdAt }) {
             <Avatar
               key={index}
               alt={author.name}
-              src={author.thumbnail}
+              src={author.avatar}
               sx={{ width: 24, height: 24 }}
             />
           ))}
@@ -100,7 +100,7 @@ function Author({ authors, createdAt }) {
 Author.propTypes = {
   authors: PropTypes.arrayOf(
     PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
+      avatar: PropTypes.string,
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
@@ -177,7 +177,21 @@ export default function MainContent() {
         }
         const response = await fetch(url.toString());
         const parsedResponse = await response.json(); 
-        setCourses(parsedResponse.results);
+        const course = parsedResponse.results.map(course => ({
+          id: course.id,
+          name: course.name,
+          image: course.image,
+          title: course.title,
+          outline: course.outline,
+          authors: [{
+            name: course.author.name,
+            avatar: course.author.thumbnail || '/static/images/avatar/default.jpg',
+          }],
+          categoryName: course.category.name,
+          createdAt: course.created_at
+        }));
+  
+        setCourses(course);
       } catch (err) {
         console.log(err);
       }
@@ -291,7 +305,7 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {course.category.name}
+                  {course.categoryName}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {course.title}
@@ -300,7 +314,7 @@ export default function MainContent() {
                   {course.outline}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={[course.author]} createdAt={course.created_at} />
+              <Author authors={course.authors} createdAt={course.createdAt} />
             </SyledCard>
           </Grid>)
           }
