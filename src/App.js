@@ -19,8 +19,8 @@ export default function App() {
       <Container sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4, marginTop: 10 }}>
       <Router>
         <Routes>
-          <Route path="/" element={<Blog />} />
-          <Route path="/course/:id" element={<CoursePage />} />
+          <Route path="/upskill-club-web/" element={<Blog />} />
+          <Route path="/upskill-club-web/course/:id" element={<CoursePage />} />
         </Routes>
       </Router>
       </Container>
