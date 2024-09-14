@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { useNavigate } from 'react-router-dom';
 
 // Styling components
 const StyledTypography = styled(Typography)({
@@ -102,6 +103,7 @@ export default function Latest({ courseId, title }) {
   const [totalCount, setTotalCount] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
+  const navigate = useNavigate();
 
   const fetchArticleInfo = async (page = 1) => {
     try {
@@ -114,12 +116,13 @@ export default function Latest({ courseId, title }) {
       const response = await fetch(url.toString());
       const data = await response.json();
       const articles = data.results.map(article => ({
+        id: article.id,
         tag: article.course.title,
         title: article.title,
         description: article.outline,
         authors: [{
-          name: article.course.author.name,
-          avatar: article.course.author.thumbnail || '/static/images/avatar/default.jpg',
+          name: article.author.name,
+          avatar: article.author.thumbnail || '/static/images/avatar/default.jpg',
         }],
         createdAt: article.created_at,
       }));
@@ -140,6 +143,7 @@ export default function Latest({ courseId, title }) {
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
+    navigate(`/upskill-club-web/session/${index}`);
   };
 
   const handleBlur = () => {
@@ -169,7 +173,7 @@ export default function Latest({ courseId, title }) {
               <TitleTypography
                 gutterBottom
                 variant="h6"
-                onFocus={() => handleFocus(index)}
+                onFocus={() => handleFocus(article.id)}
                 onBlur={handleBlur}
                 tabIndex={0}
                 className={focusedCardIndex === index ? 'Mui-focused' : ''}

@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Footer from './components/Footer';
 import CoursePage from './CoursePage';
+import SessionPage from './SessionPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
@@ -21,6 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/upskill-club-web/" element={<Blog />} />
           <Route path="/upskill-club-web/course/:id" element={<CoursePage />} />
+          <Route path="/upskill-club-web/session/:id" element={<SessionPage />} />
         </Routes>
       </Router>
       </Container>
