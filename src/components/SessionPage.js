@@ -3,22 +3,92 @@ import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
-import Latest from './Latest'; // Import the Sessions component
 import { UpskillClubApi } from '../apis';
+import { ListItem } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 
 const StyledCardMedia = styled(CardMedia)({
-  objectFit: 'cover',
+  maxWidth: '60%',
+  width: { xs: '100%', md: 'fit-content'},
 });
-
-const StyledCardContent = styled(CardContent)({
-  padding: 16,
-});
-
+const getFirstLevelText = (text) => {
+  return (<Typography variant='string'>
+    {text}
+  </Typography>);
+}
+const getSecondLevelText = (text) => {
+  return (<ListItem>
+      <ChevronRightIcon/>
+      {text}
+      </ListItem>);
+}
+const getThirdLevelText = (text) => {
+  return (<ListItem >
+      <ListItem>
+      <SubdirectoryArrowRightIcon/>
+      {text}
+      </ListItem>
+    </ListItem>);
+}
+const getFourthLevelText = (text) => {
+  return (<ListItem >
+    <ListItem>
+    <ListItem>
+    <SubdirectoryArrowRightIcon/>
+    {text}
+    </ListItem>
+    </ListItem>
+  </ListItem>);
+}
 const getdescriptionComponent = (descriptionText) => {
-    return descriptionText;
+    const words = descriptionText.split(' ');
+    const componentList = [];
+    let index = 0, count = 0;
+    while (index < words.length) {
+      count = 0;
+      let stringStart, stringEnd;
+      if (words[index] == '<level_1>') {
+        stringStart = index+1;
+        while(words[index] !== '</level_1>' && count < 500) {
+          index++;
+          count++;
+        }
+        stringEnd = index;
+        componentList.push(getFirstLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      }
+      else if (words[index] == '<level_2>') {
+        stringStart = index+1;
+        while(words[index] !== '</level_2>' && count < 500) {
+          index++;
+          count++;
+        }
+        stringEnd = index;
+        componentList.push(getSecondLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      }
+      else if (words[index] == '<level_3>') {
+        stringStart = index+1;
+        while(words[index] !== '</level_3>' && count < 500) {
+          index++;
+          count++;
+        }
+        stringEnd = index;
+        componentList.push(getThirdLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      }
+      else if (words[index] == '<level_4>') {
+        stringStart = index+1;
+        while(words[index] !== '</level_4>' && count < 500) {
+          index++;
+          count++;
+        }
+        stringEnd = index;
+        componentList.push(getFourthLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      }
+      index++;
+    }
+    return (componentList);
 }
 
 export default function SessionPage() {
@@ -47,31 +117,21 @@ export default function SessionPage() {
 
   return (
     <Container>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1}}>
         {sessionConcepts.map((session) => {
         const descriptionComponent = getdescriptionComponent(session.description);
-        return (<Box>
+        return (<>
           <Typography variant="h4" gutterBottom>
             {session.title}
           </Typography>
-          {session.image && <StyledCardMedia
+          {session.image && (<Box sx= {{display: 'flex', flexDirection: 'row', 
+          flexGrow: 1}}><StyledCardMedia
             component="img"
             image={session.image}
             alt={session.title}
-          />}
+          /></Box>)}
           {descriptionComponent}
-          {/* <StyledCardContent>
-            <Typography variant="h5" gutterBottom>
-              {c.name}
-            </Typography>
-            <Typography variant="body1" paragraph>
-              {course.short_description}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {course.created_at}
-            </Typography>
-          </StyledCardContent> */}
-          </Box>)
+          </>)
         })}
       </Box>
     </Container>
