@@ -6,8 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
-import Latest from './components/Latest'; // Import the Sessions component
-import { UpskillClubApi } from './apis';
+import Latest from './Latest'; // Import the Sessions component
+import { UpskillClubApi } from '../apis';
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: 'cover',

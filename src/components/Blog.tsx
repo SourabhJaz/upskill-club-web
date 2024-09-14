@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import MainContent from './components/MainContent';
-import Latest from './components/Latest';
+import MainContent from './MainContent';
+import Latest from './Latest';
 
 export default function Blog() {
   return (

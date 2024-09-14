@@ -1,11 +1,10 @@
-import * as React from 'react';
-import Blog from './Blog';
+import Blog from './components/Blog';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Footer from './components/Footer';
-import CoursePage from './CoursePage';
-import SessionPage from './SessionPage';
+import CoursePage from './components/CoursePage';
+import SessionPage from './components/SessionPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
