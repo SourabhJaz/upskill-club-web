@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 import Latest from './components/Latest'; // Import the Sessions component
+import { UpskillClubApi } from './apis';
 
 const StyledCardMedia = styled(CardMedia)({
   objectFit: 'cover',
@@ -26,21 +27,18 @@ export default function SessionPage() {
 
   React.useEffect(() => {
     const fetchCourse = async () => {
-      try {
-        const url = new URL('https://sourabhjaz.pythonanywhere.com/api/concept');
-        url.searchParams.append('session', id);
-        const response = await fetch(url.toString());
-        const data = await response.json();
-        const sessionInformation = data.results.map(concept => ({
-            id: concept.id,
-            title: concept.title,
-            image: concept.image,
-            description: concept.description
-          }));
-        setSession(sessionInformation);
-      } catch (err) {
-        console.log(err);
+      const response = await UpskillClubApi.getConcept({ sessionId: id });
+      if (!response.success) {
+        return undefined;
       }
+      const { data } = response;
+      const sessionInformation = data.results.map((concept) => ({
+        id: concept.id,
+        title: concept.title,
+        image: concept.image,
+        description: concept.description,
+      }));
+      setSession(sessionInformation);
     };
     fetchCourse();
   }, [id]);
