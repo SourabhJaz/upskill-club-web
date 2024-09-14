@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { UpskillClubApi } from '../apis';
 import { useNavigate } from 'react-router-dom';
 
 // Styling components
@@ -106,31 +107,27 @@ export default function Latest({ courseId, title }) {
   const navigate = useNavigate();
 
   const fetchArticleInfo = async (page = 1) => {
-    try {
-      const offset = (page - 1) * 10;
-      const url = new URL('https://sourabhjaz.pythonanywhere.com/api/session');
-      url.searchParams.append('offset', offset);
-      if (courseId) {
-        url.searchParams.append('course', courseId);
-      }
-      const response = await fetch(url.toString());
-      const data = await response.json();
-      const articles = data.results.map(article => ({
-        id: article.id,
-        tag: article.course.title,
-        title: article.title,
-        description: article.outline,
-        authors: [{
+    const offset = (page - 1) * 10;
+    const response = await UpskillClubApi.getSessions({ offset, courseId });
+    if (!response.success) {
+      return undefined;
+    }
+    const { data } = response;
+    const articles = data.results.map((article) => ({
+      id: article.id,
+      tag: article.course.title,
+      title: article.title,
+      description: article.outline,
+      authors: [
+        {
           name: article.author.name,
           avatar: article.author.thumbnail || '/static/images/avatar/default.jpg',
-        }],
-        createdAt: article.created_at,
-      }));
-      setArticleInfo(articles);
-      setTotalCount(data.count);
-    } catch (err) {
-      console.log(err);
-    }
+        },
+      ],
+      createdAt: article.created_at,
+    }));
+    setArticleInfo(articles);
+    setTotalCount(data.count);
   };
 
   React.useEffect(() => {

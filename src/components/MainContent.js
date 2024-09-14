@@ -15,6 +15,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
+import { UpskillClubApi } from '../apis';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -153,49 +154,40 @@ export default function MainContent() {
   const navigate = useNavigate();
   
   React.useEffect(() => {
-      const populateCategories = async() => {
-        try {    
-          const response = await fetch('https://sourabhjaz.pythonanywhere.com/api/category/');
-          const parsedResponse = await response.json();  
-          setCategories([defaultCategory, ...parsedResponse.results])
-        } catch (err) {
-      console.log(err);
+    const populateCategories = async () => {
+      const response = await UpskillClubApi.getCategories();
+      if (response.success) {
+        setCategories([defaultCategory, ...response.data.results]);
       }
-    }
+    };
     populateCategories();
   }, []);
 
   React.useEffect(() => {
-    const populateCourses = async() => {
-      try {
-        const url = new URL('https://sourabhjaz.pythonanywhere.com/api/course');
-        if(searchItem) {
-          url.searchParams.append('search', searchItem);
-        }
-        if (selectedCategory) {
-          url.searchParams.append('category', selectedCategory);
-        }
-        const response = await fetch(url.toString());
-        const parsedResponse = await response.json(); 
-        const course = parsedResponse.results.map(course => ({
-          id: course.id,
-          name: course.name,
-          image: course.image,
-          title: course.title,
-          outline: course.outline,
-          authors: [{
+    const populateCourses = async () => {
+      const response = await UpskillClubApi.getCourses({ searchItem, category: selectedCategory });
+      if (!response.success) {
+        return undefined;
+      }
+      const { data } = response;
+      const parsedCourses = data.results.map((course) => ({
+        id: course.id,
+        name: course.name,
+        image: course.image,
+        title: course.title,
+        outline: course.outline,
+        authors: [
+          {
             name: course.author.name,
             avatar: course.author.thumbnail || '/static/images/avatar/default.jpg',
-          }],
-          categoryName: course.category.name,
-          createdAt: course.created_at
-        }));
-  
-        setCourses(course);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+          },
+        ],
+        categoryName: course.category.name,
+        createdAt: course.created_at,
+      }));
+
+      setCourses(parsedCourses);
+    };
     populateCourses();
   }, [selectedCategory, searchItem]);
 
