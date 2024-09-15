@@ -1,42 +1,64 @@
-# Material UI - Create React App example
+# Upskill Club Web
 
-## How to use
+Welcome to the Upskill Club Web repository! This project serves as the front-end application that connects to the Upskill Courses Django backend. It provides a user-friendly interface to explore courses in various categories.
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+## Table of Contents
 
-<!-- #default-branch-switch -->
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+To get started with the Upskill Club Web application, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/SourabhJaz/upskill-club-web.git
+   ```
+
+2. Navigate into the project directory:
+   ```bash
+   cd upskill-club-web
+   ```
+
+3. Install the required dependencies:
+   ```bash
+   npm install
+   ```
+
+## Usage
+
+To run the application locally, use the following command:
 
 ```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/material-ui-cra
-cd material-ui-cra
-```
-
-Install it and run:
-
-```bash
-npm install
 npm start
 ```
 
-or:
+The application will be available at `http://localhost:3000`.
 
-<!-- #default-branch-switch -->
+## Features
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-cra)
+- **Course Categories**: View and filter courses by their categories.
+- **Course Listings**: Browse through available courses with detailed descriptions.
+- **Course Sessions**: Access information about different sessions related to the courses.
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-cra)
+## Contributing
 
-## The idea behind the example
+Contributions are welcome! If you would like to contribute to this project, please follow these steps:
 
-<!-- #default-branch-switch -->
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a pull request.
 
-This example demonstrates how you can use [Create React App](https://github.com/facebookincubator/create-react-app) with Material UI.
-It includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI v6.
-If you prefer, you can [use styled-components instead](https://mui.com/material-ui/integrations/interoperability/#styled-components).
+## License
 
-## What's next?
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-<!-- #default-branch-switch -->
+---
 
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+Feel free to explore the code and contribute to enhance the Upskill Club Web application!
