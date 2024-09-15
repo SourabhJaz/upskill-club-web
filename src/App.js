@@ -17,11 +17,11 @@ export default function App() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline enableColorScheme />
       <Container sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4, marginTop: 10 }}>
-      <Router>
+      <Router basename='/upskill-club-web'>
         <Routes>
-          <Route path="/upskill-club-web/" element={<Blog />} />
-          <Route path="/upskill-club-web/course/:id" element={<CoursePage />} />
-          <Route path="/upskill-club-web/session/:id" element={<SessionPage />} />
+          <Route path="/" element={<Blog />} />
+          <Route path="/course/:id" element={<CoursePage />} />
+          <Route path="/session/:id" element={<SessionPage />} />
         </Routes>
       </Router>
       </Container>

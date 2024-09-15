@@ -140,7 +140,7 @@ export default function Latest({ courseId, title }) {
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
-    navigate(`/upskill-club-web/session/${index}`);
+    navigate(`/session/${index}`);
   };
 
   const handleBlur = () => {

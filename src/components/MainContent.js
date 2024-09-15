@@ -207,7 +207,7 @@ export default function MainContent() {
   };
   
   const handleCourseClick = (courseId) => {
-    navigate(`/upskill-club-web/course/${courseId}`); // Navigate to the course details page
+    navigate(`/course/${courseId}`); // Navigate to the course details page
   };
 
   return (
