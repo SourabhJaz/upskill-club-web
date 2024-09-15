@@ -14,6 +14,11 @@ const StyledCardMedia = styled(CardMedia)({
   maxWidth: '60%',
   width: { xs: '100%', md: 'fit-content'},
 });
+const getHeadingLevelText = (text) => {
+  return (<Typography variant="h5" gutterBottom>
+    {text}
+  </Typography>);
+}
 const getFirstLevelText = (text) => {
   return (<Typography variant='string'>
     {text}
@@ -50,6 +55,15 @@ const getdescriptionComponent = (descriptionText) => {
     while (index < words.length) {
       count = 0;
       let stringStart, stringEnd;
+      if (words[index] == '<level_0>') {
+        stringStart = index+1;
+        while(words[index] !== '</level_0>' && count < 500) {
+          index++;
+          count++;
+        }
+        stringEnd = index;
+        componentList.push(getHeadingLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      }
       if (words[index] == '<level_1>') {
         stringStart = index+1;
         while(words[index] !== '</level_1>' && count < 500) {
