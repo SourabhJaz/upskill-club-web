@@ -11,7 +11,8 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
-      'react/prop-types': [1]
+      'react/prop-types': [1],
+      'react/react-in-jsx-scope': [0]
     },
   },
 ];
