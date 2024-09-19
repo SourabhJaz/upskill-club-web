@@ -285,6 +285,7 @@ export default function MainContent() {
               <CardMedia
                 component="img"
                 alt="green iguana"
+                loading="lazy"
                 image={course.image}
                 aspect-ratio="16 / 9"
                 sx={{

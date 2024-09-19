@@ -141,6 +141,7 @@ export default function SessionPage() {
           {session.image && (<Box sx= {{display: 'flex', flexDirection: 'row', 
           flexGrow: 1}}><StyledCardMedia
             component="img"
+            loading="lazy"
             image={session.image}
             alt={session.title}
           /></Box>)}

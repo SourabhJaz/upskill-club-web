@@ -43,6 +43,7 @@ export default function CoursePage() {
         <StyledCardMedia
           component="img"
           image={course.image}
+          loading="lazy"
           alt={course.title}
         />
         <StyledCardContent>
