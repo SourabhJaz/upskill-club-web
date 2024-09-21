@@ -135,6 +135,7 @@ export default function MainContent() {
   const [courses, setCourses] = React.useState<ParsedCourse[]>([]);
   const [coursesLoading, setCoursedLoading] = React.useState(false);
   const [searchItem, setSearchItem] = React.useState('');
+  const [courseImagesLoaded, setCourseImagesLoaded] = React.useState<boolean[]>([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -170,6 +171,8 @@ export default function MainContent() {
         categoryName: course.category.name,
         createdAt: course.created_at,
       }));
+      const courseImageLoading = parsedCourses.map(() => false);
+      setCourseImagesLoaded(courseImageLoading);
       setCourses(parsedCourses);
       setCoursedLoading(false);
     };
@@ -194,6 +197,17 @@ export default function MainContent() {
 
   const handleCourseClick = (courseId: string) => {
     navigate(`/course/${courseId}`); // Navigate to the course details page
+  };
+
+  const updateCourseImageLoading = (idx: number) => {
+    setCourseImagesLoaded((currentState) => {
+      return currentState.map((value, index) => {
+        if (idx === index) {
+          return true;
+        }
+        return value;
+      });
+    });
   };
 
   return (
@@ -272,7 +286,7 @@ export default function MainContent() {
         renderCoursesLoading()
       ) : (
         <Grid container spacing={2} columns={12}>
-          {courses.map((course) => {
+          {courses.map((course, idx) => {
             return (
               <Grid size={{ xs: 12, md: 6 }} key={course.id}>
                 <SyledCard
@@ -282,10 +296,17 @@ export default function MainContent() {
                   onClick={() => handleCourseClick(course.id)} // Navigate to course details page
                   className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
                 >
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    height={325}
+                    sx={{
+                      display: courseImagesLoaded[idx] ? 'none' : 'block',
+                    }}
+                  />
                   <CardMedia
                     component="img"
                     alt="green iguana"
-                    loading="lazy"
                     image={course.image}
                     aspect-ratio="16 / 9"
                     sx={{
@@ -294,7 +315,9 @@ export default function MainContent() {
                       objectFit: 'cover',
                       borderBottom: '1px solid',
                       borderColor: 'divider',
+                      display: courseImagesLoaded[idx] ? 'block' : 'none',
                     }}
+                    onLoad={() => updateCourseImageLoading(idx)}
                   />
                   <SyledCardContent>
                     <Typography gutterBottom variant="caption" component="div">
