@@ -141,7 +141,18 @@ export default function Latest(props: { courseId?: string; title: string; style?
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
                 {article.description}
               </StyledTypography>
-              <Author authors={article.authors} createdAt={article.createdAt} />
+
+              <Author
+                authors={article.authors}
+                createdAt={article.createdAt}
+                styleProps={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 2,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              />
             </Box>
           </Grid>
         ))}

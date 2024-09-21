@@ -4,20 +4,22 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { ParsedAuthor } from './interface';
 import { Utils } from '../common';
+import { SxProps, Theme } from '@mui/material';
 
-const Author = (props: { authors: ParsedAuthor[]; createdAt: string }) => {
-  const { authors, createdAt } = props;
+const Author = (props: { authors: ParsedAuthor[]; createdAt: string; styleProps?: SxProps<Theme> }) => {
+  const { authors, createdAt, styleProps } = props;
+
+  const boxStyleProps: SxProps<Theme> = styleProps ?? {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 2,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '16px',
+  };
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px',
-      }}
-    >
+    <Box sx={boxStyleProps}>
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
         <AvatarGroup max={3}>
           {authors.map((author, index) => (
