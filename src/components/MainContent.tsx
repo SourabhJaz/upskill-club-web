@@ -175,7 +175,9 @@ export default function MainContent() {
           width: { xs: '100%', md: 'fit-content' },
           overflow: 'auto',
         }}
-      ></Box>
+      >
+        <Search onSearch={handleSearch} />
+      </Box>
       <Box
         sx={{
           display: 'flex',
