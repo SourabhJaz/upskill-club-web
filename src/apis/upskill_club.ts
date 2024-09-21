@@ -2,11 +2,11 @@ import { ApiCall } from '../common';
 import { UPSKILL_CLUB_SERVER_URL } from './constants';
 
 const UpskillClubApi = {
-  getCategories: async () => {
-    return await ApiCall.doGet(`${UPSKILL_CLUB_SERVER_URL}/category/`);
+  getCategories: async <T>() => {
+    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/category/`);
   },
 
-  getCourses: async (params: { searchItem?: string; category?: number }) => {
+  getCourses: async <T>(params: { searchItem?: string; category?: number }) => {
     const { searchItem, category } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/course`);
@@ -18,7 +18,7 @@ const UpskillClubApi = {
       url.searchParams.append('category', String(category));
     }
 
-    return await ApiCall.doGet(url);
+    return await ApiCall.doGet<T>(url);
   },
 
   getCourseById: async (params: { courseId: string }) => {
