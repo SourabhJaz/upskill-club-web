@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -16,8 +14,9 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { GetCoursesResponse, GetUpskillCategoriesResponse, ParsedAuthor, ParsedCourse } from './interface';
+import { GetCoursesResponse, GetUpskillCategoriesResponse, ParsedCourse } from './interface';
 import { DEFAULT_UPSKILL_CATEGORY } from './constants';
+import { Author } from './Author';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -54,43 +53,6 @@ const StyledTypography = styled(Typography)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
-
-const getFormattedDate = (dateStr) => {
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-  const dateObj = new Date(dateStr);
-  return dateObj.toLocaleDateString('en-US', options);
-};
-
-function Author(props: { authors: ParsedAuthor[]; createdAt: string }) {
-  const { authors, createdAt } = props;
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px',
-      }}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">{authors.map((author) => author.name).join(', ')}</Typography>
-      </Box>
-      <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
-    </Box>
-  );
-}
 
 export function Search({ onSearch }) {
   const [searchItem, setSearchTerm] = React.useState('');
