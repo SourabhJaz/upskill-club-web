@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
@@ -9,8 +7,9 @@ import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { UpskillClubApi } from '../apis';
 import { useNavigate } from 'react-router-dom';
-import { GetSessionsResponse, ParsedArticle, ParsedAuthor } from './interface';
+import { GetSessionsResponse, ParsedArticle } from './interface';
 import { Utils } from '../common';
+import { Author } from './Author';
 
 // Styling components
 const StyledTypography = styled(Typography)({
@@ -57,30 +56,6 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     width: '100%',
   },
 }));
-
-function Author({ authors }: { authors: ParsedAuthor[] }) {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">{authors.map((author) => author.name).join(', ')}</Typography>
-      </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
-    </Box>
-  );
-}
 
 export default function Latest(props: { courseId?: string; title: string; style?: React.CSSProperties }) {
   const { courseId, title, style } = props;
@@ -166,8 +141,7 @@ export default function Latest(props: { courseId?: string; title: string; style?
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
                 {article.description}
               </StyledTypography>
-
-              <Author authors={article.authors} />
+              <Author authors={article.authors} createdAt={article.createdAt} />
             </Box>
           </Grid>
         ))}
