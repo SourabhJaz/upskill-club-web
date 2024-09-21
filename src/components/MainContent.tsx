@@ -1,7 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -16,6 +13,10 @@ import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
+import { Utils } from '../common';
+import { GetCoursesResponse, GetUpskillCategoriesResponse, ParsedCourse } from './interface';
+import { DEFAULT_UPSKILL_CATEGORY } from './constants';
+import { Author } from './Author';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -53,69 +54,14 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-const getFormattedDate = (dateStr) => {
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-  const dateObj = new Date(dateStr);
-  return dateObj.toLocaleDateString('en-US', options)
-}
-
-function Author({ authors, createdAt }) {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px',
-      }}
-    >
-      <Box
-        sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
-      >
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar
-              key={index}
-              alt={author.name}
-              src={author.avatar}
-              sx={{ width: 24, height: 24 }}
-            />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">
-          {authors.map((author) => author.name).join(', ')}
-        </Typography>
-      </Box>
-      <Typography variant="caption">{getFormattedDate(createdAt)}</Typography>
-    </Box>
-  );
-}
-
-Author.propTypes = {
-  authors: PropTypes.arrayOf(
-    PropTypes.shape({
-      avatar: PropTypes.string,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
-
 export function Search({ onSearch }) {
   const [searchItem, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
   const handleKeyDown = (event) => {
-    if(event.keyCode == 13)
-      handleSearch();
-  }
+    if (event.keyCode == 13) handleSearch();
+  };
   const handleSearch = () => {
     onSearch(searchItem);
   };
@@ -142,31 +88,28 @@ export function Search({ onSearch }) {
 }
 
 export default function MainContent() {
-  const defaultCategory = {
-    id: 0,
-    name: 'ALL CATEGORIES'
-  };
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
-  const [categories, setCategories] = React.useState([defaultCategory]);
-  const [selectedCategory, selectCategory] = React.useState(defaultCategory.id);
-  const [courses, setCourses] = React.useState([]);
+  const [categories, setCategories] = React.useState([DEFAULT_UPSKILL_CATEGORY]);
+  const [selectedCategory, selectCategory] = React.useState(DEFAULT_UPSKILL_CATEGORY.id);
+  const [courses, setCourses] = React.useState<ParsedCourse[]>([]);
   const [searchItem, setSearchItem] = React.useState('');
   const navigate = useNavigate();
-  
+
   React.useEffect(() => {
     const populateCategories = async () => {
-      const response = await UpskillClubApi.getCategories();
-      if (response.success) {
-        setCategories([defaultCategory, ...response.data.results]);
+      const response = await UpskillClubApi.getCategories<GetUpskillCategoriesResponse>();
+      if (Utils.isErrorResponse(response)) {
+        return undefined;
       }
+      setCategories([DEFAULT_UPSKILL_CATEGORY, ...response.data.results]);
     };
     populateCategories();
   }, []);
 
   React.useEffect(() => {
     const populateCourses = async () => {
-      const response = await UpskillClubApi.getCourses({ searchItem, category: selectedCategory });
-      if (!response.success) {
+      const response = await UpskillClubApi.getCourses<GetCoursesResponse>({ searchItem, category: selectedCategory });
+      if (Utils.isErrorResponse(response)) {
         return undefined;
       }
       const { data } = response;
@@ -199,14 +142,14 @@ export default function MainContent() {
     setFocusedCardIndex(null);
   };
 
-  const handleClick = (index) => {
+  const handleCategoryClick = (index: number) => {
     selectCategory(index);
   };
   const handleSearch = (term) => {
     setSearchItem(term);
   };
-  
-  const handleCourseClick = (courseId) => {
+
+  const handleCourseClick = (courseId: string) => {
     navigate(`/course/${courseId}`); // Navigate to the course details page
   };
 
@@ -217,7 +160,11 @@ export default function MainContent() {
           Upskill Club
         </Typography>
         <Typography>
-          A collaborative learning club started by <a href="https://www.linkedin.com/in/anupamsingh0211/" title="Anupam Singh" target='_blank'>Anupam Singh</a> in 2021.
+          A collaborative learning club started by{' '}
+          <a href="https://www.linkedin.com/in/anupamsingh0211/" title="Anupam Singh" target="_blank" rel="noreferrer">
+            Anupam Singh
+          </a>{' '}
+          in 2021.
         </Typography>
       </div>
       <Box
@@ -229,7 +176,7 @@ export default function MainContent() {
           overflow: 'auto',
         }}
       >
-        <Search />
+        <Search onSearch={handleSearch} />
       </Box>
       <Box
         sx={{
@@ -251,13 +198,19 @@ export default function MainContent() {
           }}
         >
           {categories.map((category) => {
-            return (<Chip key={category.id} onClick={handleClick.bind(this, category.id)} size="medium" 
-            sx={{
-              border: 'none',
-            }}
-            variant={category.id == selectedCategory?'filled':'outlined'}
-            clickable
-            label={category.name} />)
+            return (
+              <Chip
+                key={category.id}
+                onClick={() => handleCategoryClick(category.id)}
+                size="medium"
+                sx={{
+                  border: 'none',
+                }}
+                variant={category.id == selectedCategory ? 'filled' : 'outlined'}
+                clickable
+                label={category.name}
+              />
+            );
           })}
         </Box>
         <Box
@@ -274,44 +227,45 @@ export default function MainContent() {
       </Box>
       <Grid container spacing={2} columns={12}>
         {courses.map((course) => {
-          return (<Grid size={{ xs: 12, md: 6 }} key={course.id}>
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(1)}
-              onBlur={handleBlur}
-              onClick={() => handleCourseClick(course.id)} // Navigate to course details page
-              className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
-            >
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                loading="lazy"
-                image={course.image}
-                aspect-ratio="16 / 9"
-                sx={{
-                  width: '100%',
-                  height: 325,
-                  objectFit: 'cover',
-                  borderBottom: '1px solid',
-                  borderColor: 'divider',
-                }}
-              />
-              <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {course.categoryName}
-                </Typography>
-                <Typography gutterBottom variant="h6" component="div">
-                  {course.title}
-                </Typography>
-                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                  {course.outline}
-                </StyledTypography>
-              </SyledCardContent>
-              <Author authors={course.authors} createdAt={course.createdAt} />
-            </SyledCard>
-          </Grid>)
-          }
-        )}
+          return (
+            <Grid size={{ xs: 12, md: 6 }} key={course.id}>
+              <SyledCard
+                variant="outlined"
+                onFocus={() => handleFocus(1)}
+                onBlur={handleBlur}
+                onClick={() => handleCourseClick(course.id)} // Navigate to course details page
+                className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
+              >
+                <CardMedia
+                  component="img"
+                  alt="green iguana"
+                  loading="lazy"
+                  image={course.image}
+                  aspect-ratio="16 / 9"
+                  sx={{
+                    width: '100%',
+                    height: 325,
+                    objectFit: 'cover',
+                    borderBottom: '1px solid',
+                    borderColor: 'divider',
+                  }}
+                />
+                <SyledCardContent>
+                  <Typography gutterBottom variant="caption" component="div">
+                    {course.categoryName}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="div">
+                    {course.title}
+                  </Typography>
+                  <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                    {course.outline}
+                  </StyledTypography>
+                </SyledCardContent>
+                <Author authors={course.authors} createdAt={course.createdAt} />
+              </SyledCard>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
