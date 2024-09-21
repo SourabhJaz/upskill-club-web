@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
@@ -12,6 +14,28 @@ import { Utils } from '../common';
 import { Author } from './Author';
 
 // Styling components
+const SyledCard = styled(Card)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: 0,
+  height: '100%',
+  backgroundColor: theme.palette.background.paper,
+  '&:hover': {
+    cursor: 'pointer',
+  },
+  boxShadow: 'none',
+  backgroundImage: 'none',
+}));
+
+const SyledCardContent = styled(CardContent)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 4,
+  padding: 0,
+  marginBottom: 4,
+  flexGrow: 1,
+});
+
 const StyledTypography = styled(Typography)({
   display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
@@ -115,33 +139,26 @@ export default function Latest(props: { courseId?: string; title: string; style?
       <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
         {articleInfo.map((article, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: 1,
-                height: '100%',
-              }}
-            >
-              <Typography gutterBottom variant="caption" component="div">
-                {article.tag}
-              </Typography>
-              <TitleTypography
-                gutterBottom
-                variant="h6"
-                onFocus={() => handleFocus(article.id)}
-                onBlur={handleBlur}
-                tabIndex={0}
-                className={focusedCardIndex === index ? 'Mui-focused' : ''}
-              >
-                {article.title}
-                <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
-              </TitleTypography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {article.description}
-              </StyledTypography>
-
+            <SyledCard onClick={() => navigate(`/session/${article.id}`)}>
+              <SyledCardContent>
+                <Typography gutterBottom variant="caption" component="div">
+                  {article.tag}
+                </Typography>
+                <TitleTypography
+                  gutterBottom
+                  variant="h6"
+                  onFocus={() => handleFocus(article.id)}
+                  onBlur={handleBlur}
+                  tabIndex={0}
+                  className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                >
+                  {article.title}
+                  <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
+                </TitleTypography>
+                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                  {article.description}
+                </StyledTypography>
+              </SyledCardContent>
               <Author
                 authors={article.authors}
                 createdAt={article.createdAt}
@@ -153,7 +170,7 @@ export default function Latest(props: { courseId?: string; title: string; style?
                   justifyContent: 'space-between',
                 }}
               />
-            </Box>
+            </SyledCard>
           </Grid>
         ))}
       </Grid>
