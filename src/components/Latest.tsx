@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
@@ -10,6 +9,8 @@ import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { UpskillClubApi } from '../apis';
 import { useNavigate } from 'react-router-dom';
+import { GetSessionsResponse, ParsedArticle, ParsedAuthor } from './interface';
+import { Utils } from '../common';
 
 // Styling components
 const StyledTypography = styled(Typography)({
@@ -57,7 +58,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-function Author({ authors }) {
+function Author({ authors }: { authors: ParsedAuthor[] }) {
   return (
     <Box
       sx={{
@@ -68,39 +69,23 @@ function Author({ authors }) {
         justifyContent: 'space-between',
       }}
     >
-      <Box
-        sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
-      >
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
         <AvatarGroup max={3}>
           {authors.map((author, index) => (
-            <Avatar
-              key={index}
-              alt={author.name}
-              src={author.avatar}
-              sx={{ width: 24, height: 24 }}
-            />
+            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
           ))}
         </AvatarGroup>
-        <Typography variant="caption">
-          {authors.map((author) => author.name).join(', ')}
-        </Typography>
+        <Typography variant="caption">{authors.map((author) => author.name).join(', ')}</Typography>
       </Box>
       <Typography variant="caption">July 14, 2021</Typography>
     </Box>
   );
 }
 
-Author.propTypes = {
-  authors: PropTypes.arrayOf(
-    PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
+export default function Latest(props: { courseId?: string; title: string; style?: React.CSSProperties }) {
+  const { courseId, title, style } = props;
 
-export default function Latest({ courseId, title }) {
-  const [articleInfo, setArticleInfo] = React.useState([]);
+  const [articleInfo, setArticleInfo] = React.useState<ParsedArticle[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
@@ -108,8 +93,8 @@ export default function Latest({ courseId, title }) {
 
   const fetchArticleInfo = async (page = 1) => {
     const offset = (page - 1) * 10;
-    const response = await UpskillClubApi.getSessions({ offset, courseId });
-    if (!response.success) {
+    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId });
+    if (Utils.isErrorResponse(response)) {
       return undefined;
     }
     const { data } = response;
@@ -148,7 +133,7 @@ export default function Latest({ courseId, title }) {
   };
 
   return (
-    <div>
+    <div style={style}>
       <Typography variant="h2" gutterBottom>
         {title}
       </Typography>
@@ -176,10 +161,7 @@ export default function Latest({ courseId, title }) {
                 className={focusedCardIndex === index ? 'Mui-focused' : ''}
               >
                 {article.title}
-                <NavigateNextRoundedIcon
-                  className="arrow"
-                  sx={{ fontSize: '1rem' }}
-                />
+                <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
               </TitleTypography>
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
                 {article.description}

@@ -27,7 +27,7 @@ const UpskillClubApi = {
     return await ApiCall.doGet(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
   },
 
-  getSessions: async (params: { offset?: number; courseId?: string; page?: number }) => {
+  getSessions: async <T>(params: { offset?: number; courseId?: string; page?: number }) => {
     const { offset, courseId, page } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/session`);
@@ -42,7 +42,7 @@ const UpskillClubApi = {
       url.searchParams.append('page', String(page));
     }
 
-    return await ApiCall.doGet(url);
+    return await ApiCall.doGet<T>(url);
   },
 
   getConcept: async (params: { sessionId: string }) => {

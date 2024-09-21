@@ -12,7 +12,8 @@ export default [
   {
     rules: {
       'react/prop-types': [1],
-      'react/react-in-jsx-scope': [0]
+      'react/react-in-jsx-scope': [0],
+      '@typescript-eslint/no-explicit-any': [0]
     },
   },
 ];

@@ -1,11 +1,4 @@
-type Url = string | URL;
-
-type ApiCallResponse<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | { err: true };
+import { Url, ApiCallResponse } from './interface';
 
 const performApiCall = async <T>(url: Url, requestOptions: RequestInit): Promise<ApiCallResponse<T>> => {
   try {
