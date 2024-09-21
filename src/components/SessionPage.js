@@ -138,6 +138,7 @@ export default function SessionPage() {
           <Typography variant="h4" gutterBottom>
             {session.title}
           </Typography>
+          {descriptionComponent}
           {session.image && (<Box sx= {{display: 'flex', flexDirection: 'row', 
           flexGrow: 1}}><StyledCardMedia
             component="img"
@@ -145,7 +146,6 @@ export default function SessionPage() {
             image={session.image}
             alt={session.title}
           /></Box>)}
-          {descriptionComponent}
           </>)
         })}
       </Box>
