@@ -212,18 +212,9 @@ export default function MainContent() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h1" gutterBottom sx={{ textAlign: 'center' }}>
           Upskill Club
         </Typography>
-        <Typography>
-          A collaborative learning club started by{' '}
-          <a href="https://www.linkedin.com/in/anupamsingh0211/" title="Anupam Singh" target="_blank" rel="noreferrer">
-            Anupam Singh
-          </a>{' '}
-          in 2021.
-        </Typography>
-      </div>
       <Box
         sx={{
           display: { xs: 'flex', sm: 'none' },
