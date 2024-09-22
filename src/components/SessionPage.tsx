@@ -139,21 +139,21 @@ export default function SessionPage() {
   return (
     <Container>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {sessionConcepts.map((session) => {
-          const descriptionComponent = getdescriptionComponent(session.description);
+        {sessionConcepts.map((concept) => {
+          const descriptionComponent = getdescriptionComponent(concept.description);
           return (
             <>
               <Typography variant="h4" gutterBottom>
-                {session.title}
+                {concept.title}
               </Typography>
               {descriptionComponent}
-              {session.image && (
+              {concept.image && (
                 <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
                   <CardMedia
                     component="img"
                     loading="lazy"
-                    image={session.image}
-                    alt={session.title}
+                    image={concept.image}
+                    alt={concept.title}
                     sx={{
                       maxWidth: '60%',
                       width: { xs: '100%', md: 'fit-content' },
