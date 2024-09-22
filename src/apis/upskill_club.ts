@@ -21,10 +21,10 @@ const UpskillClubApi = {
     return await ApiCall.doGet<T>(url);
   },
 
-  getCourseById: async (params: { courseId: string }) => {
+  getCourseById: async <T>(params: { courseId: string }) => {
     const { courseId } = params;
 
-    return await ApiCall.doGet(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
+    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
   },
 
   getSessions: async <T>(params: { offset?: number; courseId?: string; page?: number }) => {

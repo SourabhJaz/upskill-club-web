@@ -6,13 +6,10 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
-import Latest from './Latest'; // Import the Sessions component
+import Latest from './Latest';
 import { UpskillClubApi } from '../apis';
-
-const StyledCardMedia = styled(CardMedia)({
-  height: 325,
-  objectFit: 'cover',
-});
+import { Utils } from '../common';
+import { Course, GetCourseResponse } from './interface';
 
 const StyledCardContent = styled(CardContent)({
   padding: 16,
@@ -20,12 +17,15 @@ const StyledCardContent = styled(CardContent)({
 
 export default function CoursePage() {
   const { id } = useParams();
-  const [course, setCourse] = React.useState(null);
+  const [course, setCourse] = React.useState<Course>();
 
   React.useEffect(() => {
     const fetchCourse = async () => {
-      const response = await UpskillClubApi.getCourseById({ courseId: id });
-      if (response.success) {
+      if (id) {
+        const response = await UpskillClubApi.getCourseById<GetCourseResponse>({ courseId: id });
+        if (Utils.isErrorResponse(response)) {
+          return undefined;
+        }
         setCourse(response.data);
       }
     };
@@ -40,11 +40,14 @@ export default function CoursePage() {
         <Typography variant="h2" gutterBottom>
           {course.title}
         </Typography>
-        <StyledCardMedia
+        <CardMedia
           component="img"
           image={course.image}
-          loading="lazy"
           alt={course.title}
+          sx={{
+            height: 325,
+            objectFit: 'cover',
+          }}
         />
         <StyledCardContent>
           <Typography variant="h5" gutterBottom>
@@ -57,7 +60,7 @@ export default function CoursePage() {
             {course.created_at}
           </Typography>
         </StyledCardContent>
-        <Latest courseId={id} title='Sessions' /> {/* Include the Sessions component */}
+        <Latest courseId={id} title="Sessions" />
       </Box>
     </Container>
   );

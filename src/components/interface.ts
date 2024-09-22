@@ -13,10 +13,13 @@ export type Course = {
   image: string;
   title: string;
   outline: string;
+  short_description: string;
   author: Author;
   category: UpskillCategory;
   created_at: string;
 };
+
+export type GetCourseResponse = Course;
 
 export type ParsedCourse = {
   id: string;
