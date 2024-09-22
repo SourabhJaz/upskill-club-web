@@ -72,3 +72,21 @@ export type ParsedArticle = {
   authors: ParsedAuthor[];
   createdAt: string;
 };
+
+export type Concept = {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+};
+
+export type ParsedConcept = {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+};
+
+export type GetConceptResponse = {
+  results: Concept[];
+};

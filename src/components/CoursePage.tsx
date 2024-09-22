@@ -37,18 +37,19 @@ export default function CoursePage() {
 
   React.useEffect(() => {
     const fetchCourse = async () => {
-      if (id) {
-        const response = await UpskillClubApi.getCourseById<GetCourseResponse>({ courseId: id });
-        if (Utils.isErrorResponse(response)) {
-          return undefined;
-        }
-        if ('id' in response.data) {
-          setCourse(response.data);
-        } else {
-          setCoursePresent(false);
-        }
-        setCourseLoading(false);
+      if (!id) {
+        return undefined;
       }
+      const response = await UpskillClubApi.getCourseById<GetCourseResponse>({ courseId: id });
+      if (Utils.isErrorResponse(response)) {
+        return undefined;
+      }
+      if ('id' in response.data) {
+        setCourse(response.data);
+      } else {
+        setCoursePresent(false);
+      }
+      setCourseLoading(false);
     };
     setCourseLoading(true);
     fetchCourse();

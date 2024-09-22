@@ -45,13 +45,13 @@ const UpskillClubApi = {
     return await ApiCall.doGet<T>(url);
   },
 
-  getConcept: async (params: { sessionId: string }) => {
+  getConcept: async <T>(params: { sessionId: string }) => {
     const { sessionId } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/concept`);
     url.searchParams.append('session', String(sessionId));
 
-    return await ApiCall.doGet(url);
+    return await ApiCall.doGet<T>(url);
   },
 };
 
