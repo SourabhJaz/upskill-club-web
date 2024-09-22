@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
+import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
@@ -81,6 +82,36 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
+const renderSessionsLoading = () => {
+  return (
+    <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
+      {[1, 2, 3, 4].map((_, index) => (
+        <Grid key={index} size={{ xs: 12, sm: 6 }}>
+          <div>
+            <Skeleton width="30%" sx={{ marginBottom: 1 }} />
+            <Skeleton sx={{ marginBottom: 1 }} />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                height: '15%',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '30%' }}>
+                <Skeleton variant="circular" width={40} height={30} />
+                <Skeleton width="100%" style={{ margin: '5%' }} />
+              </div>
+              <Skeleton width="20%" />
+            </div>
+          </div>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
 export default function Latest(props: { courseId?: string; title: string; style?: React.CSSProperties }) {
   const { courseId, title, style } = props;
 
@@ -88,6 +119,7 @@ export default function Latest(props: { courseId?: string; title: string; style?
   const [totalCount, setTotalCount] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
+  const [sessionsLoading, setSessionsLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const fetchArticleInfo = async (page = 1) => {
@@ -112,9 +144,11 @@ export default function Latest(props: { courseId?: string; title: string; style?
     }));
     setArticleInfo(articles);
     setTotalCount(data.count);
+    setSessionsLoading(false);
   };
 
   React.useEffect(() => {
+    setSessionsLoading(true);
     fetchArticleInfo(currentPage);
   }, [currentPage]);
 
@@ -136,53 +170,59 @@ export default function Latest(props: { courseId?: string; title: string; style?
       <Typography variant="h2" gutterBottom>
         {title}
       </Typography>
-      <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-        {articleInfo.map((article, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6 }}>
-            <SyledCard onClick={() => navigate(`/session/${article.id}`)}>
-              <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {article.tag}
-                </Typography>
-                <TitleTypography
-                  gutterBottom
-                  variant="h6"
-                  onFocus={() => handleFocus(article.id)}
-                  onBlur={handleBlur}
-                  tabIndex={0}
-                  className={focusedCardIndex === index ? 'Mui-focused' : ''}
-                >
-                  {article.title}
-                  <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
-                </TitleTypography>
-                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                  {article.description}
-                </StyledTypography>
-              </SyledCardContent>
-              <Author
-                authors={article.authors}
-                createdAt={article.createdAt}
-                styleProps={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: 2,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              />
-            </SyledCard>
+      {sessionsLoading ? (
+        renderSessionsLoading()
+      ) : (
+        <React.Fragment>
+          <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
+            {articleInfo.map((article, index) => (
+              <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                <SyledCard onClick={() => navigate(`/session/${article.id}`)}>
+                  <SyledCardContent>
+                    <Typography gutterBottom variant="caption" component="div">
+                      {article.tag}
+                    </Typography>
+                    <TitleTypography
+                      gutterBottom
+                      variant="h6"
+                      onFocus={() => handleFocus(article.id)}
+                      onBlur={handleBlur}
+                      tabIndex={0}
+                      className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                    >
+                      {article.title}
+                      <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
+                    </TitleTypography>
+                    <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                      {article.description}
+                    </StyledTypography>
+                  </SyledCardContent>
+                  <Author
+                    authors={article.authors}
+                    createdAt={article.createdAt}
+                    styleProps={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: 2,
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  />
+                </SyledCard>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-        <Pagination
-          count={Math.ceil(totalCount / 10)}
-          page={currentPage}
-          onChange={handlePageChange}
-          hidePrevButton
-          hideNextButton
-        />
-      </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
+            <Pagination
+              count={Math.ceil(totalCount / 10)}
+              page={currentPage}
+              onChange={handlePageChange}
+              hidePrevButton
+              hideNextButton
+            />
+          </Box>
+        </React.Fragment>
+      )}
     </div>
   );
 }
