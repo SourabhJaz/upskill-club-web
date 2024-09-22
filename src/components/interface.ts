@@ -19,7 +19,11 @@ export type Course = {
   created_at: string;
 };
 
-export type GetCourseResponse = Course;
+export type GetCourseResponse =
+  | Course
+  | {
+      detail: 'No Course matches the given query.';
+    };
 
 export type ParsedCourse = {
   id: string;
