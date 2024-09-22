@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
+import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { ListItem } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -110,6 +111,7 @@ export default function SessionPage() {
   const { id } = useParams();
   const [sessionConcepts, setSession] = React.useState<ParsedConcept[]>([]);
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
+  const [conceptImagesLoaded, setConceptImagesLoaded] = React.useState<boolean[]>([]);
 
   React.useEffect(() => {
     const fetchCourse = async () => {
@@ -127,6 +129,8 @@ export default function SessionPage() {
         image: concept.image,
         description: concept.description,
       }));
+      const courseImageLoading = sessionInformation.map(() => false);
+      setConceptImagesLoaded(courseImageLoading);
       setSession(sessionInformation);
       setSessionConceptsLoading(false);
     };
@@ -134,12 +138,24 @@ export default function SessionPage() {
     fetchCourse();
   }, [id]);
 
+  const updateConceptImageLoading = (idx: number) => {
+    console.log(`updateConceptImageLoading called for idx ${idx}`);
+    setConceptImagesLoaded((currentState) => {
+      return currentState.map((value, index) => {
+        if (idx === index) {
+          return true;
+        }
+        return value;
+      });
+    });
+  };
+
   if (sessionConceptsLoading) return <div>Loading...</div>;
 
   return (
     <Container>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {sessionConcepts.map((concept) => {
+        {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (
             <>
@@ -148,16 +164,26 @@ export default function SessionPage() {
               </Typography>
               {descriptionComponent}
               {concept.image && (
-                <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, justifyContent: 'center' }}>
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    height={325}
+                    width="60%"
+                    sx={{
+                      display: conceptImagesLoaded[idx] ? 'none' : 'block',
+                    }}
+                  />
                   <CardMedia
                     component="img"
-                    loading="lazy"
                     image={concept.image}
                     alt={concept.title}
                     sx={{
                       maxWidth: '60%',
                       width: { xs: '100%', md: 'fit-content' },
+                      display: conceptImagesLoaded[idx] ? 'block' : 'none',
                     }}
+                    onLoad={() => updateConceptImageLoading(idx)}
                   />
                 </Box>
               )}
