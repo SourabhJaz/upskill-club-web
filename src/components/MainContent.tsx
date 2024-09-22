@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
@@ -87,12 +88,54 @@ export function Search({ onSearch }) {
   );
 }
 
+const renderLoadingCourse = () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: 500 }}>
+      <Skeleton height="60%" variant="rounded" />
+      <Skeleton height="25%" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          height: '15%',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '30%' }}>
+          <Skeleton variant="circular" width={40} height={30} />
+          <Skeleton width="100%" style={{ margin: '5%' }} />
+        </div>
+        <Skeleton width="20%" />
+      </div>
+    </div>
+  );
+};
+
+const renderCoursesLoading = () => {
+  const loadingCourses = [{ id: '1' }, { id: '2' }];
+
+  return (
+    <Grid container spacing={2} columns={12}>
+      {loadingCourses.map((course) => {
+        return (
+          <Grid size={{ xs: 12, md: 6 }} key={course.id}>
+            {renderLoadingCourse()}
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+};
+
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
   const [categories, setCategories] = React.useState([DEFAULT_UPSKILL_CATEGORY]);
   const [selectedCategory, selectCategory] = React.useState(DEFAULT_UPSKILL_CATEGORY.id);
   const [courses, setCourses] = React.useState<ParsedCourse[]>([]);
+  const [coursesLoading, setCoursedLoading] = React.useState(false);
   const [searchItem, setSearchItem] = React.useState('');
+  const [courseImagesLoaded, setCourseImagesLoaded] = React.useState<boolean[]>([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -128,9 +171,12 @@ export default function MainContent() {
         categoryName: course.category.name,
         createdAt: course.created_at,
       }));
-
+      const courseImageLoading = parsedCourses.map(() => false);
+      setCourseImagesLoaded(courseImageLoading);
       setCourses(parsedCourses);
+      setCoursedLoading(false);
     };
+    setCoursedLoading(true);
     populateCourses();
   }, [selectedCategory, searchItem]);
 
@@ -151,6 +197,17 @@ export default function MainContent() {
 
   const handleCourseClick = (courseId: string) => {
     navigate(`/course/${courseId}`); // Navigate to the course details page
+  };
+
+  const updateCourseImageLoading = (idx: number) => {
+    setCourseImagesLoaded((currentState) => {
+      return currentState.map((value, index) => {
+        if (idx === index) {
+          return true;
+        }
+        return value;
+      });
+    });
   };
 
   return (
@@ -225,48 +282,61 @@ export default function MainContent() {
           <Search onSearch={handleSearch} />
         </Box>
       </Box>
-      <Grid container spacing={2} columns={12}>
-        {courses.map((course) => {
-          return (
-            <Grid size={{ xs: 12, md: 6 }} key={course.id}>
-              <SyledCard
-                variant="outlined"
-                onFocus={() => handleFocus(1)}
-                onBlur={handleBlur}
-                onClick={() => handleCourseClick(course.id)} // Navigate to course details page
-                className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
-              >
-                <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  loading="lazy"
-                  image={course.image}
-                  aspect-ratio="16 / 9"
-                  sx={{
-                    width: '100%',
-                    height: 325,
-                    objectFit: 'cover',
-                    borderBottom: '1px solid',
-                    borderColor: 'divider',
-                  }}
-                />
-                <SyledCardContent>
-                  <Typography gutterBottom variant="caption" component="div">
-                    {course.categoryName}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {course.title}
-                  </Typography>
-                  <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                    {course.outline}
-                  </StyledTypography>
-                </SyledCardContent>
-                <Author authors={course.authors} createdAt={course.createdAt} />
-              </SyledCard>
-            </Grid>
-          );
-        })}
-      </Grid>
+      {coursesLoading ? (
+        renderCoursesLoading()
+      ) : (
+        <Grid container spacing={2} columns={12}>
+          {courses.map((course, idx) => {
+            return (
+              <Grid size={{ xs: 12, md: 6 }} key={course.id}>
+                <SyledCard
+                  variant="outlined"
+                  onFocus={() => handleFocus(1)}
+                  onBlur={handleBlur}
+                  onClick={() => handleCourseClick(course.id)} // Navigate to course details page
+                  className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
+                >
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    height={325}
+                    sx={{
+                      display: courseImagesLoaded[idx] ? 'none' : 'block',
+                    }}
+                  />
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={course.image}
+                    aspect-ratio="16 / 9"
+                    sx={{
+                      width: '100%',
+                      height: 325,
+                      objectFit: 'cover',
+                      borderBottom: '1px solid',
+                      borderColor: 'divider',
+                      display: courseImagesLoaded[idx] ? 'block' : 'none',
+                    }}
+                    onLoad={() => updateCourseImageLoading(idx)}
+                  />
+                  <SyledCardContent>
+                    <Typography gutterBottom variant="caption" component="div">
+                      {course.categoryName}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {course.title}
+                    </Typography>
+                    <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                      {course.outline}
+                    </StyledTypography>
+                  </SyledCardContent>
+                  <Author authors={course.authors} createdAt={course.createdAt} />
+                </SyledCard>
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
     </Box>
   );
 }

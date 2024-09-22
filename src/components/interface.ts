@@ -13,10 +13,17 @@ export type Course = {
   image: string;
   title: string;
   outline: string;
+  short_description: string;
   author: Author;
   category: UpskillCategory;
   created_at: string;
 };
+
+export type GetCourseResponse =
+  | Course
+  | {
+      detail: 'No Course matches the given query.';
+    };
 
 export type ParsedCourse = {
   id: string;
@@ -64,4 +71,22 @@ export type ParsedArticle = {
   description: string;
   authors: ParsedAuthor[];
   createdAt: string;
+};
+
+export type Concept = {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+};
+
+export type ParsedConcept = {
+  id: string;
+  title: string;
+  image: string;
+  description: string;
+};
+
+export type GetConceptResponse = {
+  results: Concept[];
 };
