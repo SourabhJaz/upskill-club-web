@@ -53,6 +53,12 @@ const UpskillClubApi = {
 
     return await ApiCall.doGet<T>(url);
   },
+
+  getAuthorById: async <T>(params: { authorId: string }) => {
+    const { authorId } = params;
+
+    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/author/${authorId}`);
+  },
 };
 
 export { UpskillClubApi };
