@@ -10,7 +10,7 @@ export type GetUpskillCategoriesResponse = {
 export type Course = {
   id: string;
   name: string;
-  image: string;
+  image_url: string;
   title: string;
   outline: string;
   short_description: string;
@@ -76,7 +76,7 @@ export type ParsedArticle = {
 export type Concept = {
   id: string;
   title: string;
-  image: string;
+  image_url: string;
   description: string;
 };
 

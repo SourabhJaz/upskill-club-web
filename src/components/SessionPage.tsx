@@ -126,7 +126,7 @@ export default function SessionPage() {
       const sessionInformation = data.results.map((concept) => ({
         id: concept.id,
         title: concept.title,
-        image: concept.image,
+        image: concept.image_url,
         description: concept.description,
       }));
       const courseImageLoading = sessionInformation.map(() => false);

@@ -78,7 +78,7 @@ export default function CoursePage() {
           />
           <CardMedia
             component="img"
-            image={course.image}
+            image={course.image_url}
             alt={course.title}
             sx={{
               height: 325,

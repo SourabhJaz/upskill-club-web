@@ -159,7 +159,7 @@ export default function MainContent() {
       const parsedCourses = data.results.map((course) => ({
         id: course.id,
         name: course.name,
-        image: course.image,
+        image: course.image_url,
         title: course.title,
         outline: course.outline,
         authors: [
