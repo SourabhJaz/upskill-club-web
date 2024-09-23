@@ -15,7 +15,14 @@ const getFormattedDate = (dateString: string) => {
   return dateObj.toLocaleDateString('en-US', options);
 };
 
+const getAuthorInitials = (authorName: string) => {
+  const nameStrings = authorName.toUpperCase().split(' ');
+  const stringInitials = nameStrings.map((nameString) => nameString.slice(0, 1));
+  return stringInitials.join('');
+};
+
 export const Utils = {
   isErrorResponse,
   getFormattedDate,
+  getAuthorInitials,
 };

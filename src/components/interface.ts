@@ -41,8 +41,12 @@ export type GetCoursesResponse = {
 };
 
 export type Author = {
+  id: string;
   name: string;
   thumbnail?: string;
+  linkedin_url?: string;
+  outline: string;
+  image_url?: string;
 };
 
 export type Article = {
@@ -90,3 +94,9 @@ export type ParsedConcept = {
 export type GetConceptResponse = {
   results: Concept[];
 };
+
+export type GetAuthorByIdResponse =
+  | Author
+  | {
+      detail: 'No Author matches the given query.';
+    };
