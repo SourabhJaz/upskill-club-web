@@ -215,8 +215,8 @@ export default function MainContent() {
         <Typography variant="h1" gutterBottom sx={{ textAlign: 'center' }}>
           Upskill Club
         </Typography>
-        <Typography variant="subtitle1" gutterBottom sx={{ textAlign: 'center' }}>
-          A collaborative community that facilitates programs designed to help individuals thrive and advance in their technical roles
+        <Typography variant="body1" gutterBottom sx={{ textAlign: 'center' }}>
+          A catalog of courses being discussed within a collaborative community called the Upskill Club
         </Typography>
       <Box
         sx={{

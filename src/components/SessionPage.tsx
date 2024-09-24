@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
-import { ListItem } from '@mui/material';
+import { List, ListItem, ListItemText } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { GetConceptResponse, ParsedConcept, ParsedArticle } from './interface';
@@ -17,30 +17,28 @@ import { styled } from '@mui/material/styles';
 
 const getHeadingLevelText = (text) => {
   return (
-    <Typography variant="h5" gutterBottom>
+    <Typography variant="h4" gutterBottom>
       {text}
     </Typography>
   );
 };
 const getFirstLevelText = (text) => {
-  return <Typography>{text}</Typography>;
+  if (text.length > 26)
+   return <Typography sx={{fontWeight: 'regular'}}>{text}</Typography>;
+  return <Typography variant='h5' sx={{fontWeight: 'bold'}} gutterBottom>{text}</Typography>;
 };
 const getSecondLevelText = (text) => {
   return (
     <ListItem>
-      <ChevronRightIcon />
-      {text}
+      <Typography sx={{display: 'list-item', paddingLeft: 2}}>{text}</Typography>
     </ListItem>
   );
 };
 const getThirdLevelText = (text) => {
   return (
-    <ListItem>
-      <ListItem>
-        <SubdirectoryArrowRightIcon />
-        {text}
-      </ListItem>
-    </ListItem>
+    <Typography sx={{fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8}}>
+    {text}
+    </Typography>
   );
 };
 const getFourthLevelText = (text) => {
@@ -48,7 +46,6 @@ const getFourthLevelText = (text) => {
     <ListItem>
       <ListItem>
         <ListItem>
-          <SubdirectoryArrowRightIcon />
           {text}
         </ListItem>
       </ListItem>
@@ -58,8 +55,7 @@ const getFourthLevelText = (text) => {
 const getdescriptionComponent = (descriptionText) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
-  let index = 0,
-    count = 0;
+  let index = 0, count = 0;
   while (index < words.length) {
     count = 0;
     let stringStart, stringEnd;
@@ -113,11 +109,10 @@ const StyledCard = styled(Card)(() => ({
   display: 'flex',
   gap: 16,
   flexDirection: 'column',
-  paddingBottom:16,
-  marginBottom: 16,
   height: '100%',
   boxShadow: 'none',
-  backgroundImage: 'none'
+  backgroundImage: 'none',
+  paddingBottom: 16
 }));
 
 export default function SessionPage() {
@@ -183,9 +178,9 @@ export default function SessionPage() {
   if (sessionConceptsLoading) return <div>Loading...</div>;
 
   return (
-    <Container>
+    <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' }}}>
       {sessionDetails && <StyledCard>
-       <Typography variant="h2" gutterBottom>
+       <Typography variant="h1" gutterBottom>
         {sessionDetails.title}
       </Typography>
       {sessionDetails.imageUrl && <CardMedia
@@ -195,7 +190,7 @@ export default function SessionPage() {
           aspect-ratio="16 / 9"
           sx={{
             width: '100%',
-            height: 325,
+            height: 400,
             objectFit: 'cover',
             borderBottom: '1px solid',
             borderColor: 'divider',
@@ -212,12 +207,12 @@ export default function SessionPage() {
         }}
         />
      </StyledCard>}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4}}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (
             <>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h3" gutterBottom>
                 {concept.title}
               </Typography>
               {descriptionComponent}
@@ -227,7 +222,6 @@ export default function SessionPage() {
                     variant="rectangular"
                     animation="wave"
                     height={325}
-                    width="60%"
                     sx={{
                       display: conceptImagesLoaded[idx] ? 'none' : 'block',
                     }}
@@ -237,8 +231,7 @@ export default function SessionPage() {
                     image={concept.image}
                     alt={concept.title}
                     sx={{
-                      maxWidth: '60%',
-                      width: { xs: '100%', md: 'fit-content' },
+                      width: { xs: '100%', md: '100%' },
                       display: conceptImagesLoaded[idx] ? 'block' : 'none',
                     }}
                     onLoad={() => updateConceptImageLoading(idx)}
