@@ -21,8 +21,13 @@ const getAuthorInitials = (authorName: string) => {
   return stringInitials.join('');
 };
 
+const openInNewTab = (url: string) => {
+  window.open(url, '_blank')?.focus();
+};
+
 export const Utils = {
   isErrorResponse,
   getFormattedDate,
   getAuthorInitials,
+  openInNewTab,
 };
