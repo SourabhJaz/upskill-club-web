@@ -53,6 +53,7 @@ export type Article = {
   id: string;
   course: Course;
   title: string;
+  image_url: string;
   outline: string;
   author: Author;
   created_at: string;
@@ -72,6 +73,7 @@ export type ParsedArticle = {
   id: string;
   tag: string;
   title: string;
+  imageUrl?: string;
   description: string;
   authors: ParsedAuthor[];
   createdAt: string;
@@ -79,6 +81,7 @@ export type ParsedArticle = {
 
 export type Concept = {
   id: string;
+  session: Article;
   title: string;
   image_url: string;
   description: string;
