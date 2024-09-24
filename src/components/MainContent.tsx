@@ -165,7 +165,7 @@ export default function MainContent() {
         authors: [
           {
             name: course.author.name,
-            avatar: course.author.thumbnail || '/static/images/avatar/default.jpg',
+            avatar: '/static/images/avatar/default.jpg',
           },
         ],
         categoryName: course.category.name,
@@ -214,6 +214,9 @@ export default function MainContent() {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <Typography variant="h1" gutterBottom sx={{ textAlign: 'center' }}>
           Upskill Club
+        </Typography>
+        <Typography variant="body1" gutterBottom sx={{ textAlign: 'center' }}>
+          A catalog of courses being discussed within a collaborative community called the Upskill Club
         </Typography>
       <Box
         sx={{
