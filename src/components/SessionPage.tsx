@@ -9,8 +9,11 @@ import { UpskillClubApi } from '../apis';
 import { ListItem } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
-import { GetConceptResponse, ParsedConcept } from './interface';
+import { GetConceptResponse, ParsedConcept, ParsedArticle } from './interface';
 import { Utils } from '../common';
+import { Author } from './Author';
+import Card from '@mui/material/Card';
+import { styled } from '@mui/material/styles';
 
 const getHeadingLevelText = (text) => {
   return (
@@ -106,10 +109,21 @@ const getdescriptionComponent = (descriptionText) => {
   }
   return componentList;
 };
+const StyledCard = styled(Card)(() => ({
+  display: 'flex',
+  gap: 16,
+  flexDirection: 'column',
+  paddingBottom:16,
+  marginBottom: 16,
+  height: '100%',
+  boxShadow: 'none',
+  backgroundImage: 'none'
+}));
 
 export default function SessionPage() {
   const { id } = useParams();
-  const [sessionConcepts, setSession] = React.useState<ParsedConcept[]>([]);
+  const [sessionConcepts, setConcepts] = React.useState<ParsedConcept[]>([]);
+  const [sessionDetails, setSession] = React.useState<ParsedArticle>();
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
   const [conceptImagesLoaded, setConceptImagesLoaded] = React.useState<boolean[]>([]);
 
@@ -123,14 +137,30 @@ export default function SessionPage() {
         return undefined;
       }
       const { data } = response;
-      const sessionInformation = data.results.map((concept) => ({
+      const conceptsInformation = data.results.map((concept) => ({
         id: concept.id,
         title: concept.title,
         image: concept.image_url,
-        description: concept.description,
+        description: concept.description 
       }));
-      const courseImageLoading = sessionInformation.map(() => false);
+      const { session } = data.results[0];
+      const sessionInformation = {
+        id: session.id,
+        tag: session.course.title,
+        title: session.title,
+        imageUrl: session.image_url,
+        description: session.outline,
+        authors: [
+          {
+            name: session.author.name,
+            avatar: session.author.thumbnail || '/static/images/avatar/default.jpg',
+          },
+        ],
+        createdAt: session.created_at,
+      };
+      const courseImageLoading = conceptsInformation.map(() => false);
       setConceptImagesLoaded(courseImageLoading);
+      setConcepts(conceptsInformation);
       setSession(sessionInformation);
       setSessionConceptsLoading(false);
     };
@@ -154,6 +184,34 @@ export default function SessionPage() {
 
   return (
     <Container>
+      {sessionDetails && <StyledCard>
+       <Typography variant="h2" gutterBottom>
+        {sessionDetails.title}
+      </Typography>
+      {sessionDetails.imageUrl && <CardMedia
+          component="img"
+          alt="green iguana"
+          image={sessionDetails.imageUrl}
+          aspect-ratio="16 / 9"
+          sx={{
+            width: '100%',
+            height: 325,
+            objectFit: 'cover',
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}
+      />}
+      <Author
+        authors={sessionDetails.authors}
+        createdAt={sessionDetails.createdAt}
+        styleProps={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+        />
+     </StyledCard>}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
