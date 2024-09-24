@@ -43,6 +43,7 @@ export type GetCoursesResponse = {
 export type Author = {
   name: string;
   thumbnail?: string;
+  image_url?: string;
 };
 
 export type Article = {
