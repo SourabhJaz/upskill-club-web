@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/upskill-club-web/static/js/main.76bab6a8.js",
+    "main.js": "/upskill-club-web/static/js/main.c19419cc.js",
     "index.html": "/upskill-club-web/index.html",
-    "main.76bab6a8.js.map": "/upskill-club-web/static/js/main.76bab6a8.js.map"
+    "main.c19419cc.js.map": "/upskill-club-web/static/js/main.c19419cc.js.map"
   },
   "entrypoints": [
-    "static/js/main.76bab6a8.js"
+    "static/js/main.c19419cc.js"
   ]
 }

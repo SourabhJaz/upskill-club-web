@@ -180,7 +180,7 @@ export default function SessionPage() {
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' }}}>
       {sessionDetails && <StyledCard>
-       <Typography variant="h1" gutterBottom>
+       <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }}  gutterBottom>
         {sessionDetails.title}
       </Typography>
       {sessionDetails.imageUrl && <CardMedia
