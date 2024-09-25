@@ -41,17 +41,7 @@ const getThirdLevelText = (text) => {
     </Typography>
   );
 };
-const getFourthLevelText = (text) => {
-  return (
-    <ListItem>
-      <ListItem>
-        <ListItem>
-          {text}
-        </ListItem>
-      </ListItem>
-    </ListItem>
-  );
-};
+
 const getdescriptionComponent = (descriptionText) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
@@ -99,7 +89,7 @@ const getdescriptionComponent = (descriptionText) => {
         count++;
       }
       stringEnd = index;
-      componentList.push(getFourthLevelText(words.slice(stringStart, stringEnd).join(' ')));
+      componentList.push(getThirdLevelText(words.slice(stringStart, stringEnd).join(' ')));
     }
     index++;
   }

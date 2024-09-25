@@ -117,8 +117,9 @@ export default function Latest(props: {
   authorId?: string;
   title: string;
   style?: React.CSSProperties;
+  order?: string;
 }) {
-  const { courseId, authorId, title, style } = props;
+  const { courseId, authorId, title, style, order } = props;
 
   const [articleInfo, setArticleInfo] = React.useState<ParsedArticle[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -129,7 +130,7 @@ export default function Latest(props: {
 
   const fetchArticleInfo = async (page = 1) => {
     const offset = (page - 1) * 10;
-    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId, authorId });
+    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId, authorId, order });
     if (Utils.isErrorResponse(response)) {
       return undefined;
     }
