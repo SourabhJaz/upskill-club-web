@@ -8,12 +8,17 @@ import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import Latest from './Latest';
+import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
 import { Course, GetCourseResponse } from './interface';
 
 const StyledCardContent = styled(CardContent)({
   padding: 16,
+});
+
+const StyledTypography = styled(Typography)({
+  '&:hover': { cursor: 'pointer' },
 });
 
 const renderCourseLoading = () => {
@@ -34,6 +39,7 @@ export default function CoursePage() {
   const [courseLoading, setCourseLoading] = React.useState(false);
   const [coursePresent, setCoursePresent] = React.useState(true);
   const [courseImageLoaded, setCourseImageLoaded] = React.useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchCourse = async () => {
@@ -54,6 +60,10 @@ export default function CoursePage() {
     setCourseLoading(true);
     fetchCourse();
   }, [id]);
+
+  const navigateToAuthorProfile = (authorId: string) => {
+    navigate(`/author/${authorId}`);
+  };
 
   if (!coursePresent) return <div>Course not found</div>;
 
@@ -88,9 +98,9 @@ export default function CoursePage() {
             onLoad={() => setCourseImageLoaded(true)}
           />
           <StyledCardContent>
-            <Typography variant="h5" gutterBottom>
+            <StyledTypography variant="h5" gutterBottom onClick={() => navigateToAuthorProfile(course.author.id)}>
               {course.author.name}
-            </Typography>
+            </StyledTypography>
             <Typography variant="body1" paragraph>
               {course.short_description}
             </Typography>

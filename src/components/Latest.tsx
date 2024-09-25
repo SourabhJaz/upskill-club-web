@@ -112,8 +112,13 @@ const renderSessionsLoading = () => {
   );
 };
 
-export default function Latest(props: { courseId?: string; title: string; style?: React.CSSProperties }) {
-  const { courseId, title, style } = props;
+export default function Latest(props: {
+  courseId?: string;
+  authorId?: string;
+  title: string;
+  style?: React.CSSProperties;
+}) {
+  const { courseId, authorId, title, style } = props;
 
   const [articleInfo, setArticleInfo] = React.useState<ParsedArticle[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -124,7 +129,7 @@ export default function Latest(props: { courseId?: string; title: string; style?
 
   const fetchArticleInfo = async (page = 1) => {
     const offset = (page - 1) * 10;
-    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId });
+    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId, authorId });
     if (Utils.isErrorResponse(response)) {
       return undefined;
     }
