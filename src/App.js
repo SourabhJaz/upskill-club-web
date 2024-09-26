@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import CoursePage from './components/CoursePage';
 import SessionPage from './components/SessionPage';
 import { AuthorProfile } from './components/AuthorProfile';
+import AppAppBar from './components/AppAppBar'
+import About from './components/About';
 
 export default function App() {
   const mode = 'dark';
@@ -17,15 +19,17 @@ export default function App() {
       <CssBaseline enableColorScheme />
       <Container sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4, marginTop: 10 }}>
         <Router basename="/upskill-club-web">
+          <AppAppBar />
           <Routes>
             <Route path="/" element={<Blog />} />
             <Route path="/course/:id" element={<CoursePage />} />
             <Route path="/session/:id" element={<SessionPage />} />
             <Route path="/author/:id" element={<AuthorProfile />} />
+            <Route path="/about" element={<About />} />
           </Routes>
+          <Footer />
         </Router>
       </Container>
-      <Footer />
     </ThemeProvider>
   );
 }
