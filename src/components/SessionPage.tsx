@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
@@ -111,6 +111,7 @@ export default function SessionPage() {
   const [sessionDetails, setSession] = React.useState<ParsedArticle>();
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
   const [conceptImagesLoaded, setConceptImagesLoaded] = React.useState<boolean[]>([]);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchCourse = async () => {
@@ -137,8 +138,9 @@ export default function SessionPage() {
         description: session.outline,
         authors: [
           {
+            id: session.author.id,
             name: session.author.name,
-            avatar: session.author.thumbnail || '/static/images/avatar/default.jpg',
+            avatar: Utils.getThumbnailCloudinaryUrl(session.author.image_url),
           },
         ],
         createdAt: session.created_at,
@@ -186,6 +188,9 @@ export default function SessionPage() {
             borderColor: 'divider',
           }}
       />}
+      <Box sx={{ '&:hover': { cursor: 'pointer',  borderBottom: '1px solid', borderColor: 'divider' }}} 
+        onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
+      >
       <Author
         authors={sessionDetails.authors}
         createdAt={sessionDetails.createdAt}
@@ -196,6 +201,7 @@ export default function SessionPage() {
           justifyContent: 'space-between',
         }}
         />
+      </Box>
      </StyledCard>}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4}}>
         {sessionConcepts.map((concept, idx) => {

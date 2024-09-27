@@ -15,7 +15,7 @@ const Author = (props: { authors: ParsedAuthor[]; createdAt: string; styleProps?
     gap: 2,
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '16px',
+    padding: '16px'
   };
 
   return (

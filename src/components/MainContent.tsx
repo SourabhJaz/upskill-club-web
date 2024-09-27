@@ -26,7 +26,7 @@ const SyledCard = styled(Card)(({ theme }) => ({
   height: '100%',
   backgroundColor: theme.palette.background.paper,
   '&:hover': {
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
     cursor: 'pointer',
   },
   '&:focus-visible': {
@@ -164,8 +164,9 @@ export default function MainContent() {
         outline: course.outline,
         authors: [
           {
+            id: course.author.id,
             name: course.author.name,
-            avatar: '/static/images/avatar/default.jpg',
+            avatar: Utils.getThumbnailCloudinaryUrl(course.author.image_url),
           },
         ],
         categoryName: course.category.name,
@@ -285,7 +286,7 @@ export default function MainContent() {
               <Grid size={{ xs: 12, md: 6 }} key={course.id}>
                 <SyledCard
                   variant="outlined"
-                  onFocus={() => handleFocus(1)}
+                  onFocus={() => handleFocus(course.id)}
                   onBlur={handleBlur}
                   onClick={() => handleCourseClick(course.id)} // Navigate to course details page
                   className={focusedCardIndex === course.id ? 'Mui-focused' : ''}

@@ -161,11 +161,6 @@ export default function About() {
   const navigate = useNavigate();
 
 
-
-  const handleCourseClick = (courseId: string) => {
-    navigate(`/course/${courseId}`); // Navigate to the course details page
-  };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
         <Typography variant="h2" gutterBottom>
@@ -252,16 +247,27 @@ export default function About() {
           <Typography variant="h2" gutterBottom>
             How to Join?
           </Typography>
-          <SyledCard sx={{height: 300, padding: 16}}>
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
+              display: 'flex',
               gap: 1,
               alignItems: 'center',
             }}
           >
+            <CardMedia
+                component="img"
+                alt="green iguana"
+                image="https://res.cloudinary.com/dns4wsdk8/image/upload/v1727441132/unlocking_soon_kosp6f.jpg"
+                aspect-ratio="16 / 9"
+                sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderBottom: '1px solid',
+                    borderColor: 'divider',
+                }}
+            />
           </Box>
-          </SyledCard>
     </Box>
   );
 }

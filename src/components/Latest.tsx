@@ -142,8 +142,9 @@ export default function Latest(props: {
       description: article.outline,
       authors: [
         {
+          id: article.author.id,
           name: article.author.name,
-          avatar: article.author.thumbnail || '/static/images/avatar/default.jpg',
+          avatar: Utils.getThumbnailCloudinaryUrl(article.author.image_url),
         },
       ],
       createdAt: article.created_at,

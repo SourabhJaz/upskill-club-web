@@ -11,11 +11,8 @@ import Latest from './Latest';
 import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { Course, GetCourseResponse } from './interface';
-
-const StyledCardContent = styled(CardContent)({
-  padding: 16,
-});
+import { ParsedCourse, GetCourseResponse } from './interface';
+import { Author } from './Author';
 
 const StyledTypography = styled(Typography)({
   '&:hover': { cursor: 'pointer' },
@@ -35,7 +32,7 @@ const renderCourseLoading = () => {
 
 export default function CoursePage() {
   const { id } = useParams();
-  const [course, setCourse] = React.useState<Course>();
+  const [course, setCourse] = React.useState<ParsedCourse>();
   const [courseLoading, setCourseLoading] = React.useState(false);
   const [coursePresent, setCoursePresent] = React.useState(true);
   const [courseImageLoaded, setCourseImageLoaded] = React.useState(false);
@@ -51,7 +48,24 @@ export default function CoursePage() {
         return undefined;
       }
       if ('id' in response.data) {
-        setCourse(response.data);
+        const course = response.data;
+        const parsedCourse = {
+          id: course.id,
+          name: course.name,
+          image: course.image_url,
+          title: course.title,
+          outline: course.outline,
+          authors: [
+            {
+              id: course.author.id,
+              name: course.author.name,
+              avatar: Utils.getThumbnailCloudinaryUrl(course.author.image_url),
+            },
+          ],
+          categoryName: course.category.name,
+          createdAt: course.created_at,
+        };
+        setCourse(parsedCourse);
       } else {
         setCoursePresent(false);
       }
@@ -61,9 +75,6 @@ export default function CoursePage() {
     fetchCourse();
   }, [id]);
 
-  const navigateToAuthorProfile = (authorId: string) => {
-    navigate(`/author/${authorId}`);
-  };
 
   if (!coursePresent) return <div>Course not found</div>;
 
@@ -88,7 +99,7 @@ export default function CoursePage() {
           />
           <CardMedia
             component="img"
-            image={course.image_url}
+            image={course.image}
             alt={course.title}
             sx={{
               height: 325,
@@ -97,17 +108,28 @@ export default function CoursePage() {
             }}
             onLoad={() => setCourseImageLoaded(true)}
           />
-          <StyledCardContent>
-            <StyledTypography variant="h5" gutterBottom onClick={() => navigateToAuthorProfile(course.author.id)}>
-              {course.author.name}
+          <Box sx={{   display: 'flex', flexDirection: 'column', gap: 1}}>
+            <Box sx={{ '&:hover': { cursor: 'pointer',  borderBottom: '1px solid', borderColor: 'divider' }}} 
+              onClick={() => navigate(`/author/${course.authors[0].id}`)}
+            >
+            <Author
+              authors={course.authors}
+              createdAt={course.createdAt}
+              styleProps={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            />
+            </Box>
+            <StyledTypography variant="h5" gutterBottom>
+              {course.name}
             </StyledTypography>
-            <Typography variant="body1" paragraph>
-              {course.short_description}
+            <Typography variant="body1">
+              {course.outline}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {course.created_at}
-            </Typography>
-          </StyledCardContent>
+          </Box>
           <Latest courseId={id} title="Sessions" />
         </Box>
       </Container>

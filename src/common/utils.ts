@@ -25,9 +25,16 @@ const openInNewTab = (url: string) => {
   window.open(url, '_blank')?.focus();
 };
 
+const getThumbnailCloudinaryUrl = (url: string|undefined) => {
+  if (!url) return '/static/images/avatar/default.jpg';
+  const urlSplit = url.split('/t_Profile/');
+  return [urlSplit[0], 't_Thumbnail', urlSplit[1]].join('/');
+};
+
 export const Utils = {
   isErrorResponse,
   getFormattedDate,
   getAuthorInitials,
   openInNewTab,
+  getThumbnailCloudinaryUrl
 };

@@ -65,6 +65,7 @@ export type GetSessionsResponse = {
 };
 
 export type ParsedAuthor = {
+  id: any;
   name: string;
   avatar: string;
 };
