@@ -67,7 +67,7 @@ export default function CoursePage() {
       <Container>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Breadcrumbs separator="›" aria-label="breadcrumb">
+            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>
               <Typography
                 variant="body2"
                 color="text.secondary"

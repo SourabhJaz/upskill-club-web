@@ -175,7 +175,7 @@ export default function SessionPage() {
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
       {sessionDetails && (
         <StyledCard>
-          <Breadcrumbs separator="›" aria-label="breadcrumb">
+          <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>
             <Typography
               variant="body2"
               color="text.secondary"
