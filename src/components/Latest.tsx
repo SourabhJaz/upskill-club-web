@@ -5,8 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
 import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import Typography, { TypographyOwnProps } from '@mui/material/Typography';
+import { styled, SxProps } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { UpskillClubApi } from '../apis';
 import { useNavigate } from 'react-router-dom';
@@ -117,11 +117,20 @@ export default function Latest(props: {
   courseId?: string;
   authorId?: string;
   title: string;
-  style?: React.CSSProperties;
+  style?: SxProps;
   order?: string;
   displayTag?: boolean;
+  headingVariant?: TypographyOwnProps['variant'];
 }) {
-  const { courseId, authorId, title, style, order, displayTag = true } = props;
+  const {
+    courseId,
+    authorId,
+    title,
+    style = { marginTop: 5 },
+    order,
+    displayTag = true,
+    headingVariant = 'h2',
+  } = props;
 
   const [sessions, setSessions] = React.useState<ParsedSession[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -163,15 +172,15 @@ export default function Latest(props: {
   };
 
   return (
-    <div style={style}>
-      <Typography variant="h2" gutterBottom>
+    <Box sx={style}>
+      <Typography variant={headingVariant} sx={{ fontWeight: 'bold' }} gutterBottom>
         {title}
       </Typography>
       {sessionsLoading ? (
         renderSessionsLoading()
       ) : (
         <React.Fragment>
-          <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
+          <Grid container spacing={8} columns={12} sx={{ marginBottom: 4 }}>
             {sessions.map((session, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6 }}>
                 <SyledCard onClick={() => navigate(`/session/${session.id}`)}>
@@ -222,6 +231,6 @@ export default function Latest(props: {
           </Box>
         </React.Fragment>
       )}
-    </div>
+    </Box>
   );
 }
