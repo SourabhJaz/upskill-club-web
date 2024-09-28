@@ -1,18 +1,19 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { ListItem } from '@mui/material';
-import { ParsedConcept, ParsedSession } from '../entities/interface';
-import { Utils } from '../common';
-import { Author } from './Author';
-import Card from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { Utils } from '../common';
+import { AuthorCard } from './Author';
 import { EntityParser } from '../entities';
+import { ParsedConcept, ParsedSession } from '../entities/interface';
 
 const getHeadingLevelText = (text) => {
   return (
@@ -153,9 +154,61 @@ export default function SessionPage() {
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
       {sessionDetails && (
         <StyledCard>
-          <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }} gutterBottom>
-            {sessionDetails.title}
-          </Typography>
+          <Breadcrumbs separator="›" aria-label="breadcrumb">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                fontWeight: 'medium',
+              }}
+              onClick={() => navigate(`/`)}
+            >
+              Home
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                fontWeight: 'medium',
+              }}
+              onClick={() => navigate(`/course/${sessionDetails.course.id}`)}
+            >
+              {sessionDetails.course.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                fontWeight: 'medium',
+              }}
+              onClick={() => navigate(``)}
+            >
+              {sessionDetails.title}
+            </Typography>
+          </Breadcrumbs>
+          <Box>
+            <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+              {sessionDetails.title}
+            </Typography>
+            <Typography variant="h6" color="text.secondary" gutterBottom>
+              {sessionDetails.description}
+            </Typography>
+          </Box>
+          <Box>
+            <AuthorCard
+              authors={sessionDetails.authors}
+              createdAt={sessionDetails.createdAt}
+              styleProps={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            />
+          </Box>
           {sessionDetails.imageUrl && (
             <CardMedia
               component="img"
@@ -168,24 +221,11 @@ export default function SessionPage() {
                 objectFit: 'cover',
                 borderBottom: '1px solid',
                 borderColor: 'divider',
+                marginTop: 5,
+                marginBottom: 5,
               }}
             />
           )}
-          <Box
-            sx={{ '&:hover': { cursor: 'pointer', borderBottom: '1px solid', borderColor: 'divider' } }}
-            onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
-          >
-            <Author
-              authors={sessionDetails.authors}
-              createdAt={sessionDetails.createdAt}
-              styleProps={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            />
-          </Box>
         </StyledCard>
       )}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
