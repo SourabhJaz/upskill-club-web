@@ -61,7 +61,7 @@ const AuthorCard = (props: { authors: ParsedAuthor[]; createdAt: string; stylePr
             />
           ))}
         </AvatarGroup>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }} gap={0.3}>
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             {authors.map((author, index) => {
               return (
