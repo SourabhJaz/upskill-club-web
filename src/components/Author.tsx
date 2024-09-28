@@ -24,7 +24,7 @@ const Author = (props: { authors: ParsedAuthor[]; createdAt: string; styleProps?
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
         <AvatarGroup max={3}>
           {authors.map((author, index) => (
-            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
+            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 30, height: 30 }} />
           ))}
         </AvatarGroup>
         <Typography variant="caption">{authors.map((author) => author.name).join(', ')}</Typography>
