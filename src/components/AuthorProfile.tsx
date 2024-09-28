@@ -9,7 +9,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { Author, GetAuthorByIdResponse } from './interface';
+import { Author } from '../entities/interface';
 import Latest from './Latest';
 
 const renderAuthorProfileLoading = () => {
@@ -39,7 +39,7 @@ const AuthorProfile = () => {
       return undefined;
     }
     const fetchAuthorProfileData = async () => {
-      const response = await UpskillClubApi.getAuthorById<GetAuthorByIdResponse>({
+      const response = await UpskillClubApi.getAuthorById({
         authorId,
       });
       if (Utils.isErrorResponse(response)) {

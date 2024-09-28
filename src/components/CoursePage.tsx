@@ -3,20 +3,15 @@ import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
-import { styled } from '@mui/material/styles';
 import Latest from './Latest';
 import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { ParsedCourse, GetCourseResponse } from './interface';
+import { ParsedCourse } from '../entities/interface';
 import { Author } from './Author';
-
-const StyledTypography = styled(Typography)({
-  '&:hover': { cursor: 'pointer' },
-});
+import { EntityParser } from '../entities';
 
 const renderCourseLoading = () => {
   return (
@@ -43,28 +38,13 @@ export default function CoursePage() {
       if (!id) {
         return undefined;
       }
-      const response = await UpskillClubApi.getCourseById<GetCourseResponse>({ courseId: id });
+      const response = await UpskillClubApi.getCourseById({ courseId: id });
       if (Utils.isErrorResponse(response)) {
         return undefined;
       }
       if ('id' in response.data) {
         const course = response.data;
-        const parsedCourse = {
-          id: course.id,
-          name: course.name,
-          image: course.image_url,
-          title: course.title,
-          outline: course.outline,
-          authors: [
-            {
-              id: course.author.id,
-              name: course.author.name,
-              avatar: Utils.getThumbnailCloudinaryUrl(course.author.image_url),
-            },
-          ],
-          categoryName: course.category.name,
-          createdAt: course.created_at,
-        };
+        const parsedCourse = EntityParser.getParsedCourse(course);
         setCourse(parsedCourse);
       } else {
         setCoursePresent(false);
@@ -74,7 +54,6 @@ export default function CoursePage() {
     setCourseLoading(true);
     fetchCourse();
   }, [id]);
-
 
   if (!coursePresent) return <div>Course not found</div>;
 
@@ -108,27 +87,23 @@ export default function CoursePage() {
             }}
             onLoad={() => setCourseImageLoaded(true)}
           />
-          <Box sx={{   display: 'flex', flexDirection: 'column', gap: 1}}>
-            <Box sx={{ '&:hover': { cursor: 'pointer',  borderBottom: '1px solid', borderColor: 'divider' }}} 
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box
+              sx={{ '&:hover': { cursor: 'pointer', borderBottom: '1px solid', borderColor: 'divider' } }}
               onClick={() => navigate(`/author/${course.authors[0].id}`)}
             >
-            <Author
-              authors={course.authors}
-              createdAt={course.createdAt}
-              styleProps={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            />
+              <Author
+                authors={course.authors}
+                createdAt={course.createdAt}
+                styleProps={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              />
             </Box>
-            <StyledTypography variant="h5" gutterBottom>
-              {course.name}
-            </StyledTypography>
-            <Typography variant="body1">
-              {course.outline}
-            </Typography>
+            <Typography variant="body1">{course.outline}</Typography>
           </Box>
           <Latest courseId={id} title="Sessions" />
         </Box>

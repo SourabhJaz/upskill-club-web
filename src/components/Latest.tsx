@@ -10,9 +10,10 @@ import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { UpskillClubApi } from '../apis';
 import { useNavigate } from 'react-router-dom';
-import { GetSessionsResponse, ParsedArticle } from './interface';
+import { ParsedSession } from '../entities/interface';
 import { Utils } from '../common';
 import { Author } from './Author';
+import { EntityParser } from '../entities';
 
 // Styling components
 const SyledCard = styled(Card)(({ theme }) => ({
@@ -121,7 +122,7 @@ export default function Latest(props: {
 }) {
   const { courseId, authorId, title, style, order } = props;
 
-  const [articleInfo, setArticleInfo] = React.useState<ParsedArticle[]>([]);
+  const [sessions, setSessions] = React.useState<ParsedSession[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
@@ -130,26 +131,14 @@ export default function Latest(props: {
 
   const fetchArticleInfo = async (page = 1) => {
     const offset = (page - 1) * 10;
-    const response = await UpskillClubApi.getSessions<GetSessionsResponse>({ offset, courseId, authorId, order });
+    const response = await UpskillClubApi.getSessions({ offset, courseId, authorId, order });
     if (Utils.isErrorResponse(response)) {
       return undefined;
     }
     const { data } = response;
-    const articles = data.results.map((article) => ({
-      id: article.id,
-      tag: article.course.title,
-      title: article.title,
-      description: article.outline,
-      authors: [
-        {
-          id: article.author.id,
-          name: article.author.name,
-          avatar: Utils.getThumbnailCloudinaryUrl(article.author.image_url),
-        },
-      ],
-      createdAt: article.created_at,
-    }));
-    setArticleInfo(articles);
+    const parsedSessions = data.results.map((session) => EntityParser.getParsedSession(session));
+
+    setSessions(parsedSessions);
     setTotalCount(data.count);
     setSessionsLoading(false);
   };
@@ -182,31 +171,31 @@ export default function Latest(props: {
       ) : (
         <React.Fragment>
           <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-            {articleInfo.map((article, index) => (
+            {sessions.map((session, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                <SyledCard onClick={() => navigate(`/session/${article.id}`)}>
+                <SyledCard onClick={() => navigate(`/session/${session.id}`)}>
                   <SyledCardContent>
                     <Typography gutterBottom variant="caption" component="div">
-                      {article.tag}
+                      {session.tag}
                     </Typography>
                     <TitleTypography
                       gutterBottom
                       variant="h6"
-                      onFocus={() => handleFocus(article.id)}
+                      onFocus={() => handleFocus(session.id)}
                       onBlur={handleBlur}
                       tabIndex={0}
                       className={focusedCardIndex === index ? 'Mui-focused' : ''}
                     >
-                      {article.title}
+                      {session.title}
                       <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: '1rem' }} />
                     </TitleTypography>
                     <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                      {article.description}
+                      {session.description}
                     </StyledTypography>
                   </SyledCardContent>
                   <Author
-                    authors={article.authors}
-                    createdAt={article.createdAt}
+                    authors={session.authors}
+                    createdAt={session.createdAt}
                     styleProps={{
                       display: 'flex',
                       flexDirection: 'row',

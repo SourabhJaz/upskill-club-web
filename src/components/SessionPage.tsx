@@ -7,11 +7,12 @@ import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { ListItem } from '@mui/material';
-import { GetConceptResponse, ParsedConcept, ParsedArticle } from './interface';
+import { ParsedConcept, ParsedSession } from '../entities/interface';
 import { Utils } from '../common';
 import { Author } from './Author';
 import Card from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { EntityParser } from '../entities';
 
 const getHeadingLevelText = (text) => {
   return (
@@ -106,7 +107,7 @@ const StyledCard = styled(Card)(() => ({
 export default function SessionPage() {
   const { id } = useParams();
   const [sessionConcepts, setConcepts] = React.useState<ParsedConcept[]>([]);
-  const [sessionDetails, setSession] = React.useState<ParsedArticle>();
+  const [sessionDetails, setSession] = React.useState<ParsedSession>();
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
   const [conceptImagesLoaded, setConceptImagesLoaded] = React.useState<boolean[]>([]);
   const navigate = useNavigate();
@@ -116,36 +117,18 @@ export default function SessionPage() {
       if (!id) {
         return undefined;
       }
-      const response = await UpskillClubApi.getConcept<GetConceptResponse>({ sessionId: id });
+      const response = await UpskillClubApi.getConceptsBySessionId({ sessionId: id });
       if (Utils.isErrorResponse(response)) {
         return undefined;
       }
       const { data } = response;
-      const conceptsInformation = data.results.map((concept) => ({
-        id: concept.id,
-        title: concept.title,
-        image: concept.image_url,
-        description: concept.description,
-      }));
+      const sessionConcepts = data.results.map((concept) => EntityParser.getParsedConcept(concept));
+
       const { session } = data.results[0];
-      const sessionInformation = {
-        id: session.id,
-        tag: session.course.title,
-        title: session.title,
-        imageUrl: session.image_url,
-        description: session.outline,
-        authors: [
-          {
-            id: session.author.id,
-            name: session.author.name,
-            avatar: Utils.getThumbnailCloudinaryUrl(session.author.image_url),
-          },
-        ],
-        createdAt: session.created_at,
-      };
-      const courseImageLoading = conceptsInformation.map(() => false);
+      const sessionInformation = EntityParser.getParsedSession(session);
+      const courseImageLoading = sessionConcepts.map(() => false);
       setConceptImagesLoaded(courseImageLoading);
-      setConcepts(conceptsInformation);
+      setConcepts(sessionConcepts);
       setSession(sessionInformation);
       setSessionConceptsLoading(false);
     };
@@ -154,7 +137,6 @@ export default function SessionPage() {
   }, [id]);
 
   const updateConceptImageLoading = (idx: number) => {
-    console.log(`updateConceptImageLoading called for idx ${idx}`);
     setConceptImagesLoaded((currentState) => {
       return currentState.map((value, index) => {
         if (idx === index) {

@@ -11,7 +11,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
-import { DEFAULT_UPSKILL_CATEGORY } from './constants';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',

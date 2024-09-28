@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { ParsedAuthor } from './interface';
+import { ParsedAuthor } from '../entities/interface';
 import { Utils } from '../common';
 import { SxProps, Theme } from '@mui/material';
 

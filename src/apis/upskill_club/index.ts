@@ -1,12 +1,20 @@
-import { ApiCall } from '../common';
+import { ApiCall } from '../../common';
 import { UPSKILL_CLUB_SERVER_URL } from './constants';
+import {
+  GetAuthorByIdResponse,
+  GetCategoriesResponse,
+  GetConceptsResponse,
+  GetCourseResponse,
+  GetCoursesResponse,
+  GetSessionsResponse,
+} from './interface';
 
 const UpskillClubApi = {
-  getCategories: async <T>() => {
-    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/category/`);
+  getCategories: async () => {
+    return await ApiCall.doGet<GetCategoriesResponse>(`${UPSKILL_CLUB_SERVER_URL}/category/`);
   },
 
-  getCourses: async <T>(params: { searchItem?: string; category?: number }) => {
+  getCourses: async (params: { searchItem?: string; category?: number }) => {
     const { searchItem, category } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/course`);
@@ -18,16 +26,22 @@ const UpskillClubApi = {
       url.searchParams.append('category', String(category));
     }
 
-    return await ApiCall.doGet<T>(url);
+    return await ApiCall.doGet<GetCoursesResponse>(url);
   },
 
-  getCourseById: async <T>(params: { courseId: string }) => {
+  getCourseById: async (params: { courseId: string }) => {
     const { courseId } = params;
 
-    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
+    return await ApiCall.doGet<GetCourseResponse>(`${UPSKILL_CLUB_SERVER_URL}/course/${courseId}`);
   },
 
-  getSessions: async <T>(params: { offset?: number; courseId?: string; page?: number; authorId?: string, order?: string }) => {
+  getSessions: async (params: {
+    offset?: number;
+    courseId?: string;
+    page?: number;
+    authorId?: string;
+    order?: string;
+  }) => {
     const { offset, courseId, page, authorId, order } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/session`);
@@ -48,22 +62,22 @@ const UpskillClubApi = {
       url.searchParams.append('ordering', '-created_at');
     }
 
-    return await ApiCall.doGet<T>(url);
+    return await ApiCall.doGet<GetSessionsResponse>(url);
   },
 
-  getConcept: async <T>(params: { sessionId: string }) => {
+  getConceptsBySessionId: async (params: { sessionId: string }) => {
     const { sessionId } = params;
 
     const url = new URL(`${UPSKILL_CLUB_SERVER_URL}/concept`);
     url.searchParams.append('session', String(sessionId));
 
-    return await ApiCall.doGet<T>(url);
+    return await ApiCall.doGet<GetConceptsResponse>(url);
   },
 
-  getAuthorById: async <T>(params: { authorId: string }) => {
+  getAuthorById: async (params: { authorId: string }) => {
     const { authorId } = params;
 
-    return await ApiCall.doGet<T>(`${UPSKILL_CLUB_SERVER_URL}/author/${authorId}`);
+    return await ApiCall.doGet<GetAuthorByIdResponse>(`${UPSKILL_CLUB_SERVER_URL}/author/${authorId}`);
   },
 };
 
