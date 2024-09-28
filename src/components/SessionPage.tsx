@@ -6,14 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
-import { List, ListItem, ListItemText } from '@mui/material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
-import { GetConceptResponse, ParsedConcept, ParsedArticle } from './interface';
+import { ListItem } from '@mui/material';
+import { ParsedConcept, ParsedSession } from '../entities/interface';
 import { Utils } from '../common';
 import { Author } from './Author';
 import Card from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { EntityParser } from '../entities';
 
 const getHeadingLevelText = (text) => {
   return (
@@ -23,29 +22,29 @@ const getHeadingLevelText = (text) => {
   );
 };
 const getFirstLevelText = (text) => {
-  if (text.length > 26)
-   return <Typography sx={{fontWeight: 'regular'}}>{text}</Typography>;
-  return <Typography variant='h5' sx={{fontWeight: 'bold'}} gutterBottom>{text}</Typography>;
+  if (text.length > 26) return <Typography sx={{ fontWeight: 'regular' }}>{text}</Typography>;
+  return (
+    <Typography variant="h5" sx={{ fontWeight: 'bold' }} gutterBottom>
+      {text}
+    </Typography>
+  );
 };
 const getSecondLevelText = (text) => {
   return (
     <ListItem>
-      <Typography sx={{display: 'list-item', paddingLeft: 2}}>{text}</Typography>
+      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>{text}</Typography>
     </ListItem>
   );
 };
 const getThirdLevelText = (text) => {
-  return (
-    <Typography sx={{fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8}}>
-    {text}
-    </Typography>
-  );
+  return <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>{text}</Typography>;
 };
 
 const getdescriptionComponent = (descriptionText) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
-  let index = 0, count = 0;
+  let index = 0,
+    count = 0;
   while (index < words.length) {
     count = 0;
     let stringStart, stringEnd;
@@ -102,13 +101,13 @@ const StyledCard = styled(Card)(() => ({
   height: '100%',
   boxShadow: 'none',
   backgroundImage: 'none',
-  paddingBottom: 16
+  paddingBottom: 16,
 }));
 
 export default function SessionPage() {
   const { id } = useParams();
   const [sessionConcepts, setConcepts] = React.useState<ParsedConcept[]>([]);
-  const [sessionDetails, setSession] = React.useState<ParsedArticle>();
+  const [sessionDetails, setSession] = React.useState<ParsedSession>();
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
   const [conceptImagesLoaded, setConceptImagesLoaded] = React.useState<boolean[]>([]);
   const navigate = useNavigate();
@@ -118,36 +117,18 @@ export default function SessionPage() {
       if (!id) {
         return undefined;
       }
-      const response = await UpskillClubApi.getConcept<GetConceptResponse>({ sessionId: id });
+      const response = await UpskillClubApi.getConceptsBySessionId({ sessionId: id });
       if (Utils.isErrorResponse(response)) {
         return undefined;
       }
       const { data } = response;
-      const conceptsInformation = data.results.map((concept) => ({
-        id: concept.id,
-        title: concept.title,
-        image: concept.image_url,
-        description: concept.description 
-      }));
+      const sessionConcepts = data.results.map((concept) => EntityParser.getParsedConcept(concept));
+
       const { session } = data.results[0];
-      const sessionInformation = {
-        id: session.id,
-        tag: session.course.title,
-        title: session.title,
-        imageUrl: session.image_url,
-        description: session.outline,
-        authors: [
-          {
-            id: session.author.id,
-            name: session.author.name,
-            avatar: Utils.getThumbnailCloudinaryUrl(session.author.image_url),
-          },
-        ],
-        createdAt: session.created_at,
-      };
-      const courseImageLoading = conceptsInformation.map(() => false);
+      const sessionInformation = EntityParser.getParsedSession(session);
+      const courseImageLoading = sessionConcepts.map(() => false);
       setConceptImagesLoaded(courseImageLoading);
-      setConcepts(conceptsInformation);
+      setConcepts(sessionConcepts);
       setSession(sessionInformation);
       setSessionConceptsLoading(false);
     };
@@ -156,7 +137,6 @@ export default function SessionPage() {
   }, [id]);
 
   const updateConceptImageLoading = (idx: number) => {
-    console.log(`updateConceptImageLoading called for idx ${idx}`);
     setConceptImagesLoaded((currentState) => {
       return currentState.map((value, index) => {
         if (idx === index) {
@@ -170,40 +150,45 @@ export default function SessionPage() {
   if (sessionConceptsLoading) return <div>Loading...</div>;
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' }}}>
-      {sessionDetails && <StyledCard>
-       <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }}  gutterBottom>
-        {sessionDetails.title}
-      </Typography>
-      {sessionDetails.imageUrl && <CardMedia
-          component="img"
-          alt="green iguana"
-          image={sessionDetails.imageUrl}
-          aspect-ratio="16 / 9"
-          sx={{
-            width: '100%',
-            height: 400,
-            objectFit: 'cover',
-            borderBottom: '1px solid',
-            borderColor: 'divider',
-          }}
-      />}
-      <Box sx={{ '&:hover': { cursor: 'pointer',  borderBottom: '1px solid', borderColor: 'divider' }}} 
-        onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
-      >
-      <Author
-        authors={sessionDetails.authors}
-        createdAt={sessionDetails.createdAt}
-        styleProps={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        />
-      </Box>
-     </StyledCard>}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4}}>
+    <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
+      {sessionDetails && (
+        <StyledCard>
+          <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }} gutterBottom>
+            {sessionDetails.title}
+          </Typography>
+          {sessionDetails.imageUrl && (
+            <CardMedia
+              component="img"
+              alt="green iguana"
+              image={sessionDetails.imageUrl}
+              aspect-ratio="16 / 9"
+              sx={{
+                width: '100%',
+                height: 400,
+                objectFit: 'cover',
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+          )}
+          <Box
+            sx={{ '&:hover': { cursor: 'pointer', borderBottom: '1px solid', borderColor: 'divider' } }}
+            onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
+          >
+            <Author
+              authors={sessionDetails.authors}
+              createdAt={sessionDetails.createdAt}
+              styleProps={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            />
+          </Box>
+        </StyledCard>
+      )}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (

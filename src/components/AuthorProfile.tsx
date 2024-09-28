@@ -9,7 +9,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { Author, GetAuthorByIdResponse } from './interface';
+import { Author } from '../entities/interface';
 import Latest from './Latest';
 
 const renderAuthorProfileLoading = () => {
@@ -39,7 +39,7 @@ const AuthorProfile = () => {
       return undefined;
     }
     const fetchAuthorProfileData = async () => {
-      const response = await UpskillClubApi.getAuthorById<GetAuthorByIdResponse>({
+      const response = await UpskillClubApi.getAuthorById({
         authorId,
       });
       if (Utils.isErrorResponse(response)) {
@@ -70,7 +70,33 @@ const AuthorProfile = () => {
     authorProfileData && (
       <Container>
         <Box sx={{ display: 'flex', flexDirection: 'column' }} gap={4}>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }} alignItems="center">
+          <Box sx={{ display: { xs: 'flex', sm: 'none' }, flexDirection: 'column' }}>
+            <Avatar
+              src={authorProfileData.image_url || '/static/images/avatar/default.jpg'}
+              alt={authorProfileData.name}
+              sx={{
+                width: 152,
+                height: 152,
+                marginBottom: 2,
+              }}
+            >
+              {authorProfileData.image_url ? undefined : Utils.getAuthorInitials(authorProfileData.name)}
+            </Avatar>
+            <Box>
+              <Typography variant="h3" marginBottom="5px">
+                {authorProfileData.name}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" gutterBottom fontStyle="italic">
+                {`${authorProfileData.outline}`}
+              </Typography>
+              {authorProfileData.linkedin_url && (
+                <IconButton sx={{ padding: 0 }} onClick={() => Utils.openInNewTab(authorProfileData.linkedin_url!)}>
+                  <LinkedInIcon fontSize="large" />
+                </IconButton>
+              )}
+            </Box>
+          </Box>
+          <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexDirection: 'row' }} alignItems="center">
             <Avatar
               src={authorProfileData.image_url || '/static/images/avatar/default.jpg'}
               alt={authorProfileData.name}

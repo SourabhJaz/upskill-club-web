@@ -15,9 +15,10 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
-import { GetCoursesResponse, GetUpskillCategoriesResponse, ParsedCourse } from './interface';
-import { DEFAULT_UPSKILL_CATEGORY } from './constants';
+import { ParsedCourse } from '../entities/interface';
+import { DEFAULT_CATEGORY } from './constants';
 import { Author } from './Author';
+import { EntityParser } from '../entities';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -55,17 +56,23 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-export function Search({ onSearch }) {
+export function Search({ onSearch }: { onSearch: (searchItem: string) => void }) {
   const [searchItem, setSearchTerm] = React.useState('');
-  const handleChange = (event) => {
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setSearchTerm(event.target.value);
   };
-  const handleKeyDown = (event) => {
-    if (event.keyCode == 13) handleSearch();
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
+    if (event.keyCode === 13) {
+      handleSearch();
+    }
   };
+
   const handleSearch = () => {
     onSearch(searchItem);
   };
+
   return (
     <FormControl sx={{ width: { xs: '100%', md: '25ch' } }} variant="outlined">
       <OutlinedInput
@@ -129,9 +136,9 @@ const renderCoursesLoading = () => {
 };
 
 export default function MainContent() {
-  const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
-  const [categories, setCategories] = React.useState([DEFAULT_UPSKILL_CATEGORY]);
-  const [selectedCategory, selectCategory] = React.useState(DEFAULT_UPSKILL_CATEGORY.id);
+  const [focusedCardIndex, setFocusedCardIndex] = React.useState<number>();
+  const [categories, setCategories] = React.useState([DEFAULT_CATEGORY]);
+  const [selectedCategory, selectCategory] = React.useState(DEFAULT_CATEGORY.id);
   const [courses, setCourses] = React.useState<ParsedCourse[]>([]);
   const [coursesLoading, setCoursedLoading] = React.useState(false);
   const [searchItem, setSearchItem] = React.useState('');
@@ -140,38 +147,26 @@ export default function MainContent() {
 
   React.useEffect(() => {
     const populateCategories = async () => {
-      const response = await UpskillClubApi.getCategories<GetUpskillCategoriesResponse>();
+      const response = await UpskillClubApi.getCategories();
       if (Utils.isErrorResponse(response)) {
         return undefined;
       }
-      setCategories([DEFAULT_UPSKILL_CATEGORY, ...response.data.results]);
+      setCategories([DEFAULT_CATEGORY, ...response.data.results]);
     };
     populateCategories();
   }, []);
 
   React.useEffect(() => {
     const populateCourses = async () => {
-      const response = await UpskillClubApi.getCourses<GetCoursesResponse>({ searchItem, category: selectedCategory });
+      const response = await UpskillClubApi.getCourses({
+        searchItem,
+        category: selectedCategory,
+      });
       if (Utils.isErrorResponse(response)) {
         return undefined;
       }
       const { data } = response;
-      const parsedCourses = data.results.map((course) => ({
-        id: course.id,
-        name: course.name,
-        image: course.image_url,
-        title: course.title,
-        outline: course.outline,
-        authors: [
-          {
-            id: course.author.id,
-            name: course.author.name,
-            avatar: Utils.getThumbnailCloudinaryUrl(course.author.image_url),
-          },
-        ],
-        categoryName: course.category.name,
-        createdAt: course.created_at,
-      }));
+      const parsedCourses = data.results.map((course) => EntityParser.getParsedCourse(course));
       const courseImageLoading = parsedCourses.map(() => false);
       setCourseImagesLoaded(courseImageLoading);
       setCourses(parsedCourses);
@@ -181,23 +176,24 @@ export default function MainContent() {
     populateCourses();
   }, [selectedCategory, searchItem]);
 
-  const handleFocus = (index) => {
+  const handleFocus = (index: number) => {
     setFocusedCardIndex(index);
   };
 
   const handleBlur = () => {
-    setFocusedCardIndex(null);
+    setFocusedCardIndex(undefined);
   };
 
   const handleCategoryClick = (index: number) => {
     selectCategory(index);
   };
-  const handleSearch = (term) => {
+
+  const handleSearch = (term: string) => {
     setSearchItem(term);
   };
 
-  const handleCourseClick = (courseId: string) => {
-    navigate(`/course/${courseId}`); // Navigate to the course details page
+  const handleCourseClick = (courseId: number) => {
+    navigate(`/course/${courseId}`);
   };
 
   const updateCourseImageLoading = (idx: number) => {
@@ -213,12 +209,13 @@ export default function MainContent() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <Typography variant="h1" gutterBottom>
-          The Upskill Club
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          A catalog of notes on courses being discussed within a collaborative community called <a  href='/upskill-club-web/about'>The Upskill Club</a>
-        </Typography>
+      <Typography variant="h1" gutterBottom>
+        The Upskill Club
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        A catalog of notes on courses being discussed within a collaborative community called{' '}
+        <a href="/upskill-club-web/about">The Upskill Club</a>
+      </Typography>
       <Box
         sx={{
           display: { xs: 'flex', sm: 'none' },
@@ -288,7 +285,7 @@ export default function MainContent() {
                   variant="outlined"
                   onFocus={() => handleFocus(course.id)}
                   onBlur={handleBlur}
-                  onClick={() => handleCourseClick(course.id)} // Navigate to course details page
+                  onClick={() => handleCourseClick(course.id)}
                   className={focusedCardIndex === course.id ? 'Mui-focused' : ''}
                 >
                   <Skeleton
