@@ -62,6 +62,18 @@ const getThirdLevelText = (text: string) => {
   );
 };
 
+const getHyperLinkText = (text: string) => {
+  const [linkText, link] = text.split('http');
+
+  return (
+    <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8, textDecoration: 'underline' }}>
+      <a href={`http${link}`} target="_blank" rel="noopener noreferrer">
+        {linkText}
+      </a>
+    </Typography>
+  );
+};
+
 const getdescriptionComponent = (descriptionText: string) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
@@ -111,6 +123,14 @@ const getdescriptionComponent = (descriptionText: string) => {
       }
       stringEnd = index;
       componentList.push(getThirdLevelText(words.slice(stringStart, stringEnd).join(' ')));
+    } else if (words[index] == '<href>') {
+      stringStart = index + 1;
+      while (words[index] !== '</href>') {
+        index++;
+        count++;
+      }
+      stringEnd = index;
+      componentList.push(getHyperLinkText(words.slice(stringStart, stringEnd).join(' ')));
     }
     index++;
   }
