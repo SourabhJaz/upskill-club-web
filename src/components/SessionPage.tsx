@@ -211,7 +211,7 @@ export default function SessionPage() {
             </Typography>
           </Breadcrumbs>
           <Box>
-            <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
               {sessionDetails.title}
             </Typography>
             <Typography variant="h6" color="text.secondary" gutterBottom>

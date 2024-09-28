@@ -92,7 +92,7 @@ export default function CoursePage() {
               </Typography>
             </Breadcrumbs>
             <Box>
-              <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+              <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
                 {course.title}
               </Typography>
               <Typography variant="h6" color="text.secondary" gutterBottom>
