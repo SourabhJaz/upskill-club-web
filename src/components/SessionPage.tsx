@@ -1,46 +1,80 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
 import { ListItem } from '@mui/material';
-import { ParsedConcept, ParsedSession } from '../entities/interface';
-import { Utils } from '../common';
-import { Author } from './Author';
-import Card from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { Utils } from '../common';
+import { AuthorCard } from './Author';
 import { EntityParser } from '../entities';
+import { ParsedConcept, ParsedSession } from '../entities/interface';
 
-const getHeadingLevelText = (text) => {
+const BoldText = ({ text }: { text: string }) => {
+  // Replace words surrounded by ** with <strong> tags
+  const boldText = text.split(/(\*\*.*?\*\*)/).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+
+  return boldText;
+};
+
+const getHeadingLevelText = (text: string) => {
   return (
     <Typography variant="h4" gutterBottom>
-      {text}
+      <BoldText text={text} />
     </Typography>
   );
 };
-const getFirstLevelText = (text) => {
+
+const getFirstLevelText = (text: string) => {
   if (text.length > 26) return <Typography sx={{ fontWeight: 'regular' }}>{text}</Typography>;
   return (
     <Typography variant="h5" sx={{ fontWeight: 'bold' }} gutterBottom>
-      {text}
+      <BoldText text={text} />
     </Typography>
   );
 };
-const getSecondLevelText = (text) => {
+
+const getSecondLevelText = (text: string) => {
   return (
     <ListItem>
-      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>{text}</Typography>
+      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>
+        <BoldText text={text} />
+      </Typography>
     </ListItem>
   );
 };
-const getThirdLevelText = (text) => {
-  return <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>{text}</Typography>;
+
+const getThirdLevelText = (text: string) => {
+  return (
+    <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>
+      <BoldText text={text} />
+    </Typography>
+  );
 };
 
-const getdescriptionComponent = (descriptionText) => {
+const getHyperLinkText = (text: string) => {
+  const [linkText, link] = text.split('http');
+
+  return (
+    <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8, textDecoration: 'underline' }}>
+      <a href={`http${link}`} target="_blank" rel="noopener noreferrer">
+        {linkText}
+      </a>
+    </Typography>
+  );
+};
+
+const getdescriptionComponent = (descriptionText: string) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
   let index = 0,
@@ -89,6 +123,14 @@ const getdescriptionComponent = (descriptionText) => {
       }
       stringEnd = index;
       componentList.push(getThirdLevelText(words.slice(stringStart, stringEnd).join(' ')));
+    } else if (words[index] == '<href>') {
+      stringStart = index + 1;
+      while (words[index] !== '</href>') {
+        index++;
+        count++;
+      }
+      stringEnd = index;
+      componentList.push(getHyperLinkText(words.slice(stringStart, stringEnd).join(' ')));
     }
     index++;
   }
@@ -153,9 +195,63 @@ export default function SessionPage() {
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
       {sessionDetails && (
         <StyledCard>
-          <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }} gutterBottom>
-            {sessionDetails.title}
-          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(`/`)}
+              >
+                Home
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(`/course/${sessionDetails.course.id}`)}
+              >
+                {sessionDetails.course.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(``)}
+              >
+                {sessionDetails.title}
+              </Typography>
+            </Breadcrumbs>
+            <Box>
+              <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
+                {sessionDetails.title}
+              </Typography>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                {sessionDetails.description}
+              </Typography>
+            </Box>
+            <Box>
+              <AuthorCard
+                authors={sessionDetails.authors}
+                createdAt={sessionDetails.createdAt}
+                styleProps={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              />
+            </Box>
+          </Box>
           {sessionDetails.imageUrl && (
             <CardMedia
               component="img"
@@ -168,31 +264,18 @@ export default function SessionPage() {
                 objectFit: 'cover',
                 borderBottom: '1px solid',
                 borderColor: 'divider',
+                marginTop: 5,
+                marginBottom: 5,
               }}
             />
           )}
-          <Box
-            sx={{ '&:hover': { cursor: 'pointer', borderBottom: '1px solid', borderColor: 'divider' } }}
-            onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
-          >
-            <Author
-              authors={sessionDetails.authors}
-              createdAt={sessionDetails.createdAt}
-              styleProps={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            />
-          </Box>
         </StyledCard>
       )}
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (
-            <>
+            <React.Fragment key={`concept_${idx}_desc`}>
               <Typography variant="h3" gutterBottom>
                 {concept.title}
               </Typography>
@@ -219,7 +302,7 @@ export default function SessionPage() {
                   />
                 </Box>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </Box>

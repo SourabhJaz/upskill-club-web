@@ -8,7 +8,7 @@ export default function Blog() {
     <Container maxWidth="lg" component="main">
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <MainContent />
-        <Latest title="Latest Sessions" order="desc" />
+        <Latest title="Latest Sessions" order="desc" headingVariant="h3" />
       </Box>
     </Container>
   );

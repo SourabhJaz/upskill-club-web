@@ -83,7 +83,7 @@ const AuthorProfile = () => {
               {authorProfileData.image_url ? undefined : Utils.getAuthorInitials(authorProfileData.name)}
             </Avatar>
             <Box>
-              <Typography variant="h3" marginBottom="5px">
+              <Typography variant="h3" marginBottom="5px" sx={{ fontWeight: 'medium' }}>
                 {authorProfileData.name}
               </Typography>
               <Typography variant="body1" color="text.secondary" gutterBottom fontStyle="italic">
@@ -109,7 +109,7 @@ const AuthorProfile = () => {
               {authorProfileData.image_url ? undefined : Utils.getAuthorInitials(authorProfileData.name)}
             </Avatar>
             <Box>
-              <Typography variant="h3" marginBottom="5px">
+              <Typography variant="h3" sx={{ fontWeight: 'medium' }} marginBottom="5px">
                 {authorProfileData.name}
               </Typography>
               <Typography variant="body1" color="text.secondary" gutterBottom fontStyle="italic">
@@ -123,7 +123,7 @@ const AuthorProfile = () => {
             </Box>
           </Box>
           <Box>
-            <Latest title="Latest Sessions" authorId={authorId} />
+            <Latest title="Latest Sessions" authorId={authorId} headingVariant="h3" />
           </Box>
         </Box>
       </Container>
