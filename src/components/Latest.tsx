@@ -119,8 +119,9 @@ export default function Latest(props: {
   title: string;
   style?: React.CSSProperties;
   order?: string;
+  displayTag?: boolean;
 }) {
-  const { courseId, authorId, title, style, order } = props;
+  const { courseId, authorId, title, style, order, displayTag = true } = props;
 
   const [sessions, setSessions] = React.useState<ParsedSession[]>([]);
   const [totalCount, setTotalCount] = React.useState(0);
@@ -175,9 +176,11 @@ export default function Latest(props: {
               <Grid key={index} size={{ xs: 12, sm: 6 }}>
                 <SyledCard onClick={() => navigate(`/session/${session.id}`)}>
                   <SyledCardContent>
-                    <Typography gutterBottom variant="caption" component="div">
-                      {session.tag}
-                    </Typography>
+                    {displayTag && (
+                      <Typography gutterBottom variant="caption" component="div">
+                        {session.tag}
+                      </Typography>
+                    )}
                     <TitleTypography
                       gutterBottom
                       variant="h6"

@@ -131,7 +131,7 @@ export default function CoursePage() {
             }}
             onLoad={() => setCourseImageLoaded(true)}
           />
-          <Latest courseId={id} title="Sessions" />
+          <Latest courseId={id} title="Sessions" displayTag={false} />
         </Box>
       </Container>
     )

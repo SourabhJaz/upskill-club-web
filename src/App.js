@@ -1,18 +1,18 @@
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Blog from './components/Blog';
 import Footer from './components/Footer';
 import CoursePage from './components/CoursePage';
 import SessionPage from './components/SessionPage';
 import { AuthorProfile } from './components/AuthorProfile';
-import AppAppBar from './components/AppAppBar'
+import AppAppBar from './components/AppAppBar';
 import About from './components/About';
 
 export default function App() {
   const mode = 'dark';
-  const defaultTheme = createTheme({ palette: { mode } });
+  const defaultTheme = responsiveFontSizes(createTheme({ palette: { mode } }));
 
   return (
     <ThemeProvider theme={defaultTheme}>
