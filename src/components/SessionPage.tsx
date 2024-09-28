@@ -195,60 +195,62 @@ export default function SessionPage() {
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
       {sessionDetails && (
         <StyledCard>
-          <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-                fontWeight: 'medium',
-              }}
-              onClick={() => navigate(`/`)}
-            >
-              Home
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-                fontWeight: 'medium',
-              }}
-              onClick={() => navigate(`/course/${sessionDetails.course.id}`)}
-            >
-              {sessionDetails.course.title}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-                fontWeight: 'medium',
-              }}
-              onClick={() => navigate(``)}
-            >
-              {sessionDetails.title}
-            </Typography>
-          </Breadcrumbs>
-          <Box>
-            <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
-              {sessionDetails.title}
-            </Typography>
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              {sessionDetails.description}
-            </Typography>
-          </Box>
-          <Box>
-            <AuthorCard
-              authors={sessionDetails.authors}
-              createdAt={sessionDetails.createdAt}
-              styleProps={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(`/`)}
+              >
+                Home
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(`/course/${sessionDetails.course.id}`)}
+              >
+                {sessionDetails.course.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                  fontWeight: 'medium',
+                }}
+                onClick={() => navigate(``)}
+              >
+                {sessionDetails.title}
+              </Typography>
+            </Breadcrumbs>
+            <Box>
+              <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
+                {sessionDetails.title}
+              </Typography>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                {sessionDetails.description}
+              </Typography>
+            </Box>
+            <Box>
+              <AuthorCard
+                authors={sessionDetails.authors}
+                createdAt={sessionDetails.createdAt}
+                styleProps={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              />
+            </Box>
           </Box>
           {sessionDetails.imageUrl && (
             <CardMedia
