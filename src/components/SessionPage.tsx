@@ -273,7 +273,7 @@ export default function SessionPage() {
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (
-            <>
+            <React.Fragment key={`concept_${idx}_desc`}>
               <Typography variant="h3" gutterBottom>
                 {concept.title}
               </Typography>
@@ -300,7 +300,7 @@ export default function SessionPage() {
                   />
                 </Box>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </Box>

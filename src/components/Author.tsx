@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
@@ -36,6 +37,7 @@ const Author = (props: { authors: ParsedAuthor[]; createdAt: string; styleProps?
 
 const AuthorCard = (props: { authors: ParsedAuthor[]; createdAt: string; styleProps?: SxProps<Theme> }) => {
   const { authors, createdAt, styleProps } = props;
+
   const navigate = useNavigate();
 
   const boxStyleProps: SxProps<Theme> = styleProps ?? {
@@ -65,22 +67,26 @@ const AuthorCard = (props: { authors: ParsedAuthor[]; createdAt: string; stylePr
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             {authors.map((author, index) => {
               return (
-                <Typography
-                  key={`{authorcard_${author.name}}`}
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{
-                    '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
-                    fontWeight: 'medium',
-                  }}
-                  onClick={() => navigate(`/author/${author.id}`)}
-                >
-                  {index === authors.length - 1 ? (
-                    <span>{author.name}</span>
-                  ) : (
-                    <span style={{ marginRight: 2 }}>{`${author.name},`}</span>
-                  )}
-                </Typography>
+                <React.Fragment key={author.id}>
+                  <Typography
+                    key={`{authorcard_${author.name}}`}
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{
+                      '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
+                      fontWeight: 'medium',
+                    }}
+                    onClick={() => navigate(`/author/${author.id}`)}
+                  >
+                    {index === authors.length - 1 ? (
+                      <Typography component={'span'} color="text.primary">
+                        {author.name}
+                      </Typography>
+                    ) : (
+                      <Typography component={'span'} style={{ marginRight: 2 }}>{`${author.name},`}</Typography>
+                    )}
+                  </Typography>
+                </React.Fragment>
               );
             })}
           </Box>
