@@ -15,33 +15,54 @@ import { AuthorCard } from './Author';
 import { EntityParser } from '../entities';
 import { ParsedConcept, ParsedSession } from '../entities/interface';
 
-const getHeadingLevelText = (text) => {
+const BoldText = ({ text }: { text: string }) => {
+  // Replace words surrounded by ** with <strong> tags
+  const boldText = text.split(/(\*\*.*?\*\*)/).map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+
+  return boldText;
+};
+
+const getHeadingLevelText = (text: string) => {
   return (
     <Typography variant="h4" gutterBottom>
-      {text}
+      <BoldText text={text} />
     </Typography>
   );
 };
-const getFirstLevelText = (text) => {
+
+const getFirstLevelText = (text: string) => {
   if (text.length > 26) return <Typography sx={{ fontWeight: 'regular' }}>{text}</Typography>;
   return (
     <Typography variant="h5" sx={{ fontWeight: 'bold' }} gutterBottom>
-      {text}
+      <BoldText text={text} />
     </Typography>
   );
 };
-const getSecondLevelText = (text) => {
+
+const getSecondLevelText = (text: string) => {
   return (
     <ListItem>
-      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>{text}</Typography>
+      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>
+        <BoldText text={text} />
+      </Typography>
     </ListItem>
   );
 };
-const getThirdLevelText = (text) => {
-  return <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>{text}</Typography>;
+
+const getThirdLevelText = (text: string) => {
+  return (
+    <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>
+      <BoldText text={text} />
+    </Typography>
+  );
 };
 
-const getdescriptionComponent = (descriptionText) => {
+const getdescriptionComponent = (descriptionText: string) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
   let index = 0,
