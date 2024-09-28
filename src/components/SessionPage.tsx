@@ -6,9 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
-import { List, ListItem, ListItemText } from '@mui/material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import { ListItem } from '@mui/material';
 import { GetConceptResponse, ParsedConcept, ParsedArticle } from './interface';
 import { Utils } from '../common';
 import { Author } from './Author';
@@ -23,29 +21,29 @@ const getHeadingLevelText = (text) => {
   );
 };
 const getFirstLevelText = (text) => {
-  if (text.length > 26)
-   return <Typography sx={{fontWeight: 'regular'}}>{text}</Typography>;
-  return <Typography variant='h5' sx={{fontWeight: 'bold'}} gutterBottom>{text}</Typography>;
+  if (text.length > 26) return <Typography sx={{ fontWeight: 'regular' }}>{text}</Typography>;
+  return (
+    <Typography variant="h5" sx={{ fontWeight: 'bold' }} gutterBottom>
+      {text}
+    </Typography>
+  );
 };
 const getSecondLevelText = (text) => {
   return (
     <ListItem>
-      <Typography sx={{display: 'list-item', paddingLeft: 2}}>{text}</Typography>
+      <Typography sx={{ display: 'list-item', paddingLeft: 2 }}>{text}</Typography>
     </ListItem>
   );
 };
 const getThirdLevelText = (text) => {
-  return (
-    <Typography sx={{fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8}}>
-    {text}
-    </Typography>
-  );
+  return <Typography sx={{ fontStyle: 'italic', fontWeight: 'regular', paddingLeft: 8 }}>{text}</Typography>;
 };
 
 const getdescriptionComponent = (descriptionText) => {
   const words = descriptionText.split(' ');
   const componentList: any[] = [];
-  let index = 0, count = 0;
+  let index = 0,
+    count = 0;
   while (index < words.length) {
     count = 0;
     let stringStart, stringEnd;
@@ -102,7 +100,7 @@ const StyledCard = styled(Card)(() => ({
   height: '100%',
   boxShadow: 'none',
   backgroundImage: 'none',
-  paddingBottom: 16
+  paddingBottom: 16,
 }));
 
 export default function SessionPage() {
@@ -127,7 +125,7 @@ export default function SessionPage() {
         id: concept.id,
         title: concept.title,
         image: concept.image_url,
-        description: concept.description 
+        description: concept.description,
       }));
       const { session } = data.results[0];
       const sessionInformation = {
@@ -170,40 +168,45 @@ export default function SessionPage() {
   if (sessionConceptsLoading) return <div>Loading...</div>;
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' }}}>
-      {sessionDetails && <StyledCard>
-       <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }}  gutterBottom>
-        {sessionDetails.title}
-      </Typography>
-      {sessionDetails.imageUrl && <CardMedia
-          component="img"
-          alt="green iguana"
-          image={sessionDetails.imageUrl}
-          aspect-ratio="16 / 9"
-          sx={{
-            width: '100%',
-            height: 400,
-            objectFit: 'cover',
-            borderBottom: '1px solid',
-            borderColor: 'divider',
-          }}
-      />}
-      <Box sx={{ '&:hover': { cursor: 'pointer',  borderBottom: '1px solid', borderColor: 'divider' }}} 
-        onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
-      >
-      <Author
-        authors={sessionDetails.authors}
-        createdAt={sessionDetails.createdAt}
-        styleProps={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        />
-      </Box>
-     </StyledCard>}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4}}>
+    <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
+      {sessionDetails && (
+        <StyledCard>
+          <Typography sx={{ typography: { md: 'h1', xs: 'h2' } }} gutterBottom>
+            {sessionDetails.title}
+          </Typography>
+          {sessionDetails.imageUrl && (
+            <CardMedia
+              component="img"
+              alt="green iguana"
+              image={sessionDetails.imageUrl}
+              aspect-ratio="16 / 9"
+              sx={{
+                width: '100%',
+                height: 400,
+                objectFit: 'cover',
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+          )}
+          <Box
+            sx={{ '&:hover': { cursor: 'pointer', borderBottom: '1px solid', borderColor: 'divider' } }}
+            onClick={() => navigate(`/author/${sessionDetails.authors[0].id}`)}
+          >
+            <Author
+              authors={sessionDetails.authors}
+              createdAt={sessionDetails.createdAt}
+              styleProps={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            />
+          </Box>
+        </StyledCard>
+      )}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (
