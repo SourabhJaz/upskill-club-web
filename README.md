@@ -1,6 +1,6 @@
 # Upskill Club Web
 
-Welcome to the Upskill Club Web repository! This project serves as the front-end application that connects to the Upskill Courses Django backend. It provides a user-friendly interface to explore courses in various categories.
+Welcome to the Upskill Club Web repository! This project serves as the front-end application that connects to the Upskill Courses [Django backend](https://github.com/SourabhJaz/upskill-club/). It provides a user-friendly interface to explore courses in various categories.
 
 ## Table of Contents
 
