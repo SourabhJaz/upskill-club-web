@@ -1,1 +1,1 @@
-export const UPSKILL_CLUB_SERVER_URL = 'http://127.0.0.1:8000/api';
+export const UPSKILL_CLUB_SERVER_URL = 'https://sourabhjaz.pythonanywhere.com/api';
