@@ -9,7 +9,7 @@ import SessionPage from './components/SessionPage';
 import { AuthorProfile } from './components/AuthorProfile';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
-import AppAppBar from './components/AppAppBar';
+import AppBar from './components/AppBar';
 import About from './components/About';
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
       <CssBaseline enableColorScheme />
       <Container sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4, marginTop: 10 }}>
         <Router basename="/upskill-club-web">
-          <AppAppBar />
+          <AppBar />
           <Routes>
             <Route path="/" element={<Blog />} />
             <Route path="/course/:id" element={<CoursePage />} />
