@@ -1,0 +1,3 @@
+const TermsOfService = () => {};
+
+export { TermsOfService };
