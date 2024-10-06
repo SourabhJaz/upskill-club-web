@@ -8,7 +8,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import { UpskillClubApi } from '../apis';
-import { ListItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Utils } from '../common';
 import { AuthorCard } from './Author';
