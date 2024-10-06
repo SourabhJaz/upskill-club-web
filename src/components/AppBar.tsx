@@ -19,7 +19,7 @@ const StyledToolbar = styled(Toolbar)(() => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexShrink: 0,
-  padding: '8px 16px',
+  padding: '12px 16px',
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -101,7 +101,7 @@ export default function AppAppBar() {
                   <ChevronLeftIcon />
                 </IconButton>
               </Box>
-              <Divider sx={{ paddingTop: 1, marginBottom: 1 }} />
+              <Divider sx={{ paddingTop: 2, marginBottom: 2 }} />
               <MenuItem onClick={() => navigate(`/`)}>
                 <Typography color="text.secondary">HOME</Typography>
               </MenuItem>
