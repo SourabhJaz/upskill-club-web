@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import TwitterIcon from '@mui/icons-material/X';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -44,12 +44,28 @@ export default function Footer() {
           }}
         >
           <div>
-            <Link color="text.secondary" variant="body2" href="#">
-              Privacy Policy
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                '&:hover': { cursor: 'pointer' },
+              }}
+            >
+              <ReactRouterLink to="/privacy-policy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </ReactRouterLink>
             </Link>
             <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>&nbsp;•&nbsp;</Typography>
-            <Link color="text.secondary" variant="body2" href="#">
-              Terms of Service
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                '&:hover': { cursor: 'pointer' },
+              }}
+            >
+              <ReactRouterLink to="/terms-of-service" target="_blank" rel="noopener noreferrer">
+                Terms of Service
+              </ReactRouterLink>
             </Link>
             <Copyright />
           </div>
