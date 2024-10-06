@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import CoursePage from './components/CoursePage';
 import SessionPage from './components/SessionPage';
 import { AuthorProfile } from './components/AuthorProfile';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 import AppAppBar from './components/AppAppBar';
 import About from './components/About';
 
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/session/:id" element={<SessionPage />} />
             <Route path="/author/:id" element={<AuthorProfile />} />
             <Route path="/about" element={<About />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
           <Footer />
         </Router>
