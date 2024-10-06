@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { useNavigate } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -24,8 +24,6 @@ function Copyright() {
 }
 
 export default function Footer() {
-  const navigate = useNavigate();
-
   return (
     <React.Fragment>
       <Divider />
@@ -46,10 +44,16 @@ export default function Footer() {
           }}
         >
           <div>
-            <Link color="text.secondary" variant="body2" sx={{
-              '&:hover': { cursor: 'pointer' }
-            }} onClick={() => navigate('/privacy-policy')}>
-              Privacy Policy
+            <Link
+              color="text.secondary"
+              variant="body2"
+              sx={{
+                '&:hover': { cursor: 'pointer' },
+              }}
+            >
+              <ReactRouterLink to="/privacy-policy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </ReactRouterLink>
             </Link>
             <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>&nbsp;•&nbsp;</Typography>
             <Link color="text.secondary" variant="body2" href="#">
