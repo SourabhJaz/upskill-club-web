@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
       </Box>
       <Box>
         <Typography variant="body1" gutterBottom>
-          {`Your privacy is important to the UpskillClub Club ("we," "our," or "the UpskillClub Club"). This Privacy Policy
+          {`Your privacy is important to the UpskillClub Club ("we," "our," or "the UpskillClub"). This Privacy Policy
           outlines how we collect, use, share, and protect your personal information when you engage with the Club,
           including through our website, events, communications, and learning platforms.`}
         </Typography>
@@ -39,8 +39,8 @@ const PrivacyPolicy = () => {
           {`a) Personal Information:`}
         </Typography>
         <Typography variant="body1" gutterBottom>
-          When you join the UpskillClub Club or participate in our events, activities, or platforms, we may
-          collect personal information including but not limited to:
+          When you join the UpskillClub Club or participate in our events, activities, or platforms, we may collect
+          personal information including but not limited to:
         </Typography>
         <ul>
           <li>Full name</li>
@@ -183,7 +183,7 @@ const PrivacyPolicy = () => {
           please contact us at:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          <strong>UpskillClub Club</strong>
+          <strong>The UpskillClub Club</strong>
           <br />
           Email: [Insert Email Address]
           <br />
