@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
     >
       <Box>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
-          UpskillClub Privacy Policy
+          The UpskillClub Privacy Policy
         </Typography>
         <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 'medium' }} gutterBottom>
           Effective date: October 10, 2024

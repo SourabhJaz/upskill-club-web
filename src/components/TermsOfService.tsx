@@ -17,7 +17,7 @@ const TermsOfService = () => {
     >
       <Box>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
-          UpskillClub Terms of Service
+          The UpskillClub Terms of Service
         </Typography>
         <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 'medium' }} gutterBottom>
           Effective date: October 10, 2024
