@@ -154,11 +154,12 @@ const TermsOfService = () => {
         <Typography variant="body1">
           <strong>The UpskillClub Club</strong>
           <br />
-          Email: [Insert Email Address]
+          Email: <a href="mailto:anupam.singh0211@gmail.com">anupam.singh0211@gmail.com</a>
           <br />
-          Phone: [Insert Phone Number]
-          <br />
-          Address: [Insert Address]
+          LinkedIn:{' '}
+          <a href="https://www.linkedin.com/company/theupskillclub" target="_blank" rel="noopener noreferrer">
+            theupskillclub
+          </a>
         </Typography>
       </Box>
     </Container>
