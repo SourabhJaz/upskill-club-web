@@ -9,7 +9,7 @@ import SessionPage from './components/SessionPage';
 import { AuthorProfile } from './components/AuthorProfile';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
-import AppBar from './components/AppBar';
+import AppBar from './components/AppAppBar';
 import About from './components/About';
 
 export default function App() {
