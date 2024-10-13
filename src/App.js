@@ -20,7 +20,7 @@ export default function App() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline enableColorScheme />
       <Container sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4, marginTop: 10 }}>
-        <Router basename="/upskill-club-web">
+        <Router basename='/'>
           <AppBar />
           <Routes>
             <Route path="/" element={<Blog />} />

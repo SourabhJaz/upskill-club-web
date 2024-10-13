@@ -12,7 +12,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as ReactRouterLink } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
 import { ParsedCourse } from '../entities/interface';
@@ -214,7 +214,9 @@ export default function MainContent() {
       </Typography>
       <Typography variant="body1" gutterBottom>
         A catalog of notes on courses being discussed within a collaborative community called{' '}
-        <a href="/upskill-club-web/about">The Upskill Club</a>
+        <ReactRouterLink to="/about" target="_blank" rel="noopener noreferrer">
+          The Upskill Club
+        </ReactRouterLink>
       </Typography>
       <Box
         sx={{
