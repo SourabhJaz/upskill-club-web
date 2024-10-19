@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/course/1",
-            "destination": "/course"
+            "destination": "https://www.google.com"
         }
     ]
 }
