@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-            "source": "/course/1",
+            "source": "/(.*)",
             "destination": "https://www.google.com"
         }
     ]
