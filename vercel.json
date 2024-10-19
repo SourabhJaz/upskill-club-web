@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "https://www.google.com"
+            "destination": "/"
         }
     ]
 }
