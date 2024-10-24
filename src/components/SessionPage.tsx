@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
@@ -17,9 +17,7 @@ import MarkdownRenderer from './MarkdownRenderer';
 
 const getdescriptionComponent = (descriptionText: string) => {
   const formattedDescription = descriptionText.replace(/\\/g, '\n');
-  return (
-      <MarkdownRenderer markdown={formattedDescription}/>
-  );
+  return <MarkdownRenderer markdown={formattedDescription} />;
 };
 
 const StyledCard = styled(Card)(() => ({
@@ -33,7 +31,9 @@ const StyledCard = styled(Card)(() => ({
 }));
 
 export default function SessionPage() {
-  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('sessionId');
+
   const [sessionConcepts, setConcepts] = React.useState<ParsedConcept[]>([]);
   const [sessionDetails, setSession] = React.useState<ParsedSession>();
   const [sessionConceptsLoading, setSessionConceptsLoading] = React.useState(false);
@@ -90,7 +90,7 @@ export default function SessionPage() {
                   '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
                   fontWeight: 'medium',
                 }}
-                onClick={() => navigate(`/course/${sessionDetails.course.id}`)}
+                onClick={() => navigate(`/course?courseId=${sessionDetails.course.id}`)}
               >
                 {sessionDetails.course.title}
               </Typography>
@@ -139,13 +139,13 @@ export default function SessionPage() {
                 objectFit: 'cover',
                 borderBottom: '1px solid',
                 borderColor: 'divider',
-                marginTop: 5
+                marginTop: 5,
               }}
             />
           )}
         </StyledCard>
       )}
-      <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {sessionConcepts.map((concept, idx) => {
           const descriptionComponent = getdescriptionComponent(concept.description);
           return (

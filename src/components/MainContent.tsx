@@ -193,7 +193,7 @@ export default function MainContent() {
   };
 
   const handleCourseClick = (courseId: number) => {
-    navigate(`/course/${courseId}`);
+    navigate(`/course?courseId=${courseId}`);
   };
 
   const updateCourseImageLoading = (idx: number) => {

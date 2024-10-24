@@ -24,9 +24,9 @@ export default function App() {
           <AppBar />
           <Routes>
             <Route path="/" element={<Blog />} />
-            <Route path="/course/:id" element={<CoursePage />} />
-            <Route path="/session/:id" element={<SessionPage />} />
-            <Route path="/author/:id" element={<AuthorProfile />} />
+            <Route path="/course" element={<CoursePage />} />
+            <Route path="/session" element={<SessionPage />} />
+            <Route path="/author" element={<AuthorProfile />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />

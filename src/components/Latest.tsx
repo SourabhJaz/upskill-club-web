@@ -164,7 +164,7 @@ export default function Latest(props: {
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
-    navigate(`/session/${index}`);
+    navigate(`/session?sessionId=${index}`);
   };
 
   const handleBlur = () => {
@@ -183,7 +183,7 @@ export default function Latest(props: {
           <Grid container spacing={8} columns={12} sx={{ marginBottom: 4 }}>
             {sessions.map((session, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                <SyledCard onClick={() => navigate(`/session/${session.id}`)}>
+                <SyledCard onClick={() => navigate(`/session?sessionId=${session.id}`)}>
                   <SyledCardContent>
                     {displayTag && (
                       <Typography gutterBottom variant="caption" component="div">
