@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
@@ -7,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Latest from './Latest';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
 import { ParsedCourse } from '../entities/interface';
@@ -27,7 +26,8 @@ const renderCourseLoading = () => {
 };
 
 export default function CoursePage() {
-  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('courseId');
   const [course, setCourse] = React.useState<ParsedCourse>();
   const [courseLoading, setCourseLoading] = React.useState(false);
   const [coursePresent, setCoursePresent] = React.useState(true);
@@ -63,6 +63,7 @@ export default function CoursePage() {
   }
 
   return (
+    id &&
     course && (
       <Container>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -86,7 +87,7 @@ export default function CoursePage() {
                   '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
                   fontWeight: 'medium',
                 }}
-                onClick={() => navigate(`/course/${course.id}`)}
+                onClick={() => navigate(`/course?courseId=${course.id}`)}
               >
                 {course.title}
               </Typography>
