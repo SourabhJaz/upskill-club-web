@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
@@ -7,6 +6,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Skeleton from '@mui/material/Skeleton';
+import { useSearchParams } from 'react-router-dom';
 import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
 import { Author } from '../entities/interface';
@@ -28,7 +28,8 @@ const renderAuthorProfileLoading = () => {
 };
 
 const AuthorProfile = () => {
-  const { id: authorId } = useParams();
+  const [searchParams] = useSearchParams();
+  const authorId = searchParams.get('authorId');
 
   const [authorProfileData, setAuthorProfileData] = React.useState<Author>();
   const [authorProfileLoading, setAuthorProfileLoading] = React.useState(false);
@@ -67,6 +68,7 @@ const AuthorProfile = () => {
   }
 
   return (
+    authorId &&
     authorProfileData && (
       <Container>
         <Box sx={{ display: 'flex', flexDirection: 'column' }} gap={4}>

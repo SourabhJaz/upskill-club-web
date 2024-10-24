@@ -59,7 +59,7 @@ const AuthorCard = (props: { authors: ParsedAuthor[]; createdAt: string; stylePr
               alt={author.name}
               src={author.avatar}
               sx={{ width: 44, height: 44, '&:hover': { cursor: 'pointer', opacity: 0.9 } }}
-              onClick={() => navigate(`/author/${author.id}`)}
+              onClick={() => navigate(`/author?authorId=${author.id}`)}
             />
           ))}
         </AvatarGroup>
@@ -76,7 +76,7 @@ const AuthorCard = (props: { authors: ParsedAuthor[]; createdAt: string; stylePr
                       '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
                       fontWeight: 'medium',
                     }}
-                    onClick={() => navigate(`/author/${author.id}`)}
+                    onClick={() => navigate(`/author?authorId=${author.id}`)}
                   >
                     {index === authors.length - 1 ? (
                       <Typography component={'span'} color="text.primary">
