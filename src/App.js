@@ -25,7 +25,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Blog />} />
             <Route path="/course" element={<CoursePage />} />
-            <Route path="/session/:id" element={<SessionPage />} />
+            <Route path="/session" element={<SessionPage />} />
             <Route path="/author" element={<AuthorProfile />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
