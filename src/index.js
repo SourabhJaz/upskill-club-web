@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import { Analytics } from "@vercel/analytics/react"
 import App from './App';
 import theme from './theme';
 
@@ -13,5 +14,6 @@ root.render(
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <App />
+    <Analytics />
   </ThemeProvider>,
 );
