@@ -101,7 +101,7 @@ export default function SessionPage() {
                   '&:hover': { cursor: 'pointer', textDecoration: 'underline' },
                   fontWeight: 'medium',
                 }}
-                onClick={() => navigate(``)}
+                onClick={() => navigate(`/session?sessionId=${id}`)}
               >
                 {sessionDetails.title}
               </Typography>
