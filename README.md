@@ -1,6 +1,6 @@
 # Upskill Club Web
 
-Welcome to the Upskill Club Web repository! This project serves as the front-end application that connects to the Upskill Courses [Django backend](https://github.com/SourabhJaz/upskill-club/). It provides a user-friendly interface to explore courses in various categories.
+Welcome to The Upskill Club Web repository! This project serves as the front-end application that connects to the [Django backend](https://github.com/SourabhJaz/upskill-club/). It provides a user-friendly interface to explore courses in various categories.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Welcome to the Upskill Club Web repository! This project serves as the front-end
 
 ## Installation
 
-To get started with the Upskill Club Web application, follow these steps:
+To get started with The Upskill Club Web application, follow these steps:
 
 1. Clone the repository:
    ```bash
@@ -61,4 +61,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Feel free to explore the code and contribute to enhance the Upskill Club Web application!
+Feel free to explore the code and contribute to enhance The Upskill Club Web application!

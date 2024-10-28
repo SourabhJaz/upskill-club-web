@@ -70,7 +70,7 @@ export default function AppAppBar() {
             color="inherit"
             size="medium"
             sx={{ minWidth: 0, color: 'text.secondary' }}
-            onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/tree/main', '_blank')}
+            onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/', '_blank')}
           >
             <Typography>Github</Typography>
           </Button>
@@ -109,7 +109,7 @@ export default function AppAppBar() {
                 <Typography color="text.secondary">ABOUT</Typography>
               </MenuItem>
               <MenuItem
-                onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/tree/main', '_blank')}
+                onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/', '_blank')}
               >
                 <Typography color="text.secondary">GITHUB</Typography>
               </MenuItem>

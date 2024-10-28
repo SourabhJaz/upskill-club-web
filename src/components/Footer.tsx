@@ -14,7 +14,7 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://www.linkedin.com/company/theupskillclub">
+      <Link color="text.secondary" target="_blank" href="https://www.linkedin.com/company/theupskillclub">
         The Upskill Club
       </Link>
       &nbsp;
@@ -73,7 +73,8 @@ export default function Footer() {
             <IconButton
               color="inherit"
               size="small"
-              href="https://github.com/SourabhJaz/upskill-club-web/tree/main"
+              target="_blank"
+              href="https://github.com/SourabhJaz/upskill-club-web/"
               aria-label="GitHub"
               sx={{ alignSelf: 'center' }}
             >
@@ -82,6 +83,7 @@ export default function Footer() {
             <IconButton
               color="inherit"
               size="small"
+              target="_blank"  
               href="https://www.linkedin.com/company/theupskillclub"
               aria-label="LinkedIn"
               sx={{ alignSelf: 'center' }}

@@ -52,7 +52,7 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small" onClick={() => navigate(`/about`)}>
                 About
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }} onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/tree/main', '_blank')} >
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }} onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/', '_blank')} >
                 Github
               </Button>
             </Box>
@@ -77,7 +77,7 @@ export default function AppAppBar() {
                 <Divider sx={{ my: 3 }} />
                 <MenuItem onClick={() => navigate(`/`)}>Home</MenuItem>
                 <MenuItem onClick={() => navigate(`/about`)}>About</MenuItem>
-                <MenuItem onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/tree/main', '_blank')}>Github</MenuItem>
+                <MenuItem onClick={() => window.open('https://github.com/SourabhJaz/upskill-club-web/', '_blank')}>Github</MenuItem>
               </Box>
             </Drawer>
           </Box>

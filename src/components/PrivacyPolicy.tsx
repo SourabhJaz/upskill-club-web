@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
     >
       <Box>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
-          The UpskillClub Privacy Policy
+          The Upskill Club Privacy Policy
         </Typography>
         <Typography variant="h5" color="text.secondary" sx={{ fontWeight: 'medium' }} gutterBottom>
           Effective date: October 10, 2024
@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
       </Box>
       <Box>
         <Typography variant="body1" gutterBottom>
-          {`Your privacy is important to the UpskillClub Club ("we," "our," or "the UpskillClub"). This Privacy Policy
+          {`Your privacy is important to The Upskill Club ("we," "our," or "The Upskill Club"). This Privacy Policy
           outlines how we collect, use, share, and protect your personal information when you engage with the Club,
           including through our website, events, communications, and learning platforms.`}
         </Typography>
@@ -39,7 +39,7 @@ const PrivacyPolicy = () => {
           {`a) Personal Information:`}
         </Typography>
         <Typography variant="body1" gutterBottom>
-          When you join the UpskillClub Club or participate in our events, activities, or platforms, we may collect
+          When you join The Upskill Club or participate in our events, activities, or platforms, we may collect
           personal information including but not limited to:
         </Typography>
         <ul>
@@ -182,7 +182,7 @@ const PrivacyPolicy = () => {
           please contact us at:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          <strong>The UpskillClub Club</strong>
+          <strong>The UpskillClub</strong>
           <br />
           Email: <a href="mailto:anupam.singh0211@gmail.com">anupam.singh0211@gmail.com</a>
           <br />
