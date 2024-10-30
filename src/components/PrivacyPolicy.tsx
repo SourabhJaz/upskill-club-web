@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { Helmet } from 'react-helmet';
 
 const PrivacyPolicy = () => {
   return (
@@ -15,6 +16,21 @@ const PrivacyPolicy = () => {
         },
       }}
     >
+    <Helmet>
+        <title>Privacy Policy | The Upskill Club</title>
+        <meta
+          name="description"
+          content="Learn about The Upskill Club's Privacy Policy, including how we collect, use, and protect your personal information on our platform."
+        />
+        <link rel="canonical" href="https://www.theupskillclub.com/privacy-policy" />
+        <meta property="og:title" content="Privacy Policy | The Upskill Club" />
+        <meta
+          property="og:description"
+          content="Learn about The Upskill Club's Privacy Policy, including how we collect, use, and protect your personal information on our platform."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.theupskillclub.com/privacy-policy" />
+      </Helmet>
       <Box>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
           The Upskill Club Privacy Policy
