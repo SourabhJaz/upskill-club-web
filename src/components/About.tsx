@@ -11,7 +11,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
-
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -28,7 +27,6 @@ const SyledCard = styled(Card)(({ theme }) => ({
     outlineOffset: '2px',
   },
 }));
-
 const SyledCardContent = styled(CardContent)({
   display: 'flex',
   flexDirection: 'column',
@@ -39,7 +37,6 @@ const SyledCardContent = styled(CardContent)({
     paddingBottom: 16,
   },
 });
-
 const StyledTypography = styled(Typography)({
   display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
@@ -47,7 +44,6 @@ const StyledTypography = styled(Typography)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
-
 const TitleTypography = styled(Typography)(({ theme }) => ({
     position: 'relative',
     textDecoration: 'none',
@@ -69,59 +65,56 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
       transition: 'width 0.3s ease, opacity 0.3s ease',
     }
   }));
-
 const courses = [{
     id: '1',
     categoryName: '',
-    title: 'Value 1',
-    outline: 'Encourages value 1',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    title: 'One over None',
+    outline: 'At Upskill, practical learning matters over numbers',
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730394349/vlikihjqivrzllhjwofo.jpg'
 }, {
     id: '2',
     categoryName: '',
-    title: 'Value 2',
-    outline: 'Encourages value 2',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    title: 'Inclusion',
+    outline: 'At Upskill, learning for all outweighs a few excelling',
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730392017/wze9afbxnvwvcerneqk4.jpg'
 }, {
     id: '3',
     categoryName: '',
-    title: 'Value 3',
-    outline: 'Encourages value 3',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    title: 'Collaboration',
+    outline: 'At Upskill, we believe anyone with knowledge can teach.',
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730392112/c8bjy9fnviclts8wl0wb.jpg'
 }, {
     id: '4',
     categoryName: '',
-    title: 'Value 4',
-    outline: 'Encourages value 4',
+    title: 'Practical Learning',
+    outline: 'At Upskill, learning is meant to be lived every day.',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
-
 const articles = [{
     id: '1',
     categoryName: '',
     title: 'Rule 1',
-    outline: 'Be curious',
+    outline: 'Be eternally curious',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '2',
     categoryName: '',
     title: 'Rule 2',
-    outline: 'Be humble',
+    outline: 'Be humble always',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '3',
     categoryName: '',
     title: 'Rule 3',
-    outline: 'Rule 3',
+    outline: 'Never be a A-Hole',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '4',
     categoryName: '',
     title: 'Rule 4',
-    outline: 'Rule 4',
+    outline: 'Respect everyones time',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
-
 export function Search({ onSearch }) {
   const [searchItem, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
@@ -154,12 +147,8 @@ export function Search({ onSearch }) {
     </FormControl>
   );
 }
-
-
 export default function About() {
   const navigate = useNavigate();
-
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
         <Typography variant="h2" gutterBottom>
@@ -178,8 +167,41 @@ export default function About() {
                 borderColor: 'divider',
             }}
         />
-        <Typography variant="body1" gutterBottom>
-          Some lines on how it all started as a weekend learning session and then evolved to this club. Some lines on how it all started as a weekend learning session and then evolved to this club.
+        <Typography variant="body1" gutterBottom sx={{ whiteSpace: 'pre-line' }}>
+          <p>
+            On a bright evening in 2019, Anupam and Manish were working through bugs they'd sent to production at{' '}
+            <a href="https://www.urbancompany.com" target="_blank" rel="noopener noreferrer">
+              UrbanCompany
+            </a>
+            .
+          </p>
+          <p>
+            As they resolved issues, they realized there was so much more to learn in tech. UrbanCompany had just adopted a
+            microservices architecture - an exciting shift, but one that came with new complexities to master.
+          </p>
+          <p>
+            Anupam casually asked if anyone would be interested in weekly reading sessions focused on "Building Microservices"
+            by Sam Newman. To his surprise, several team members eagerly joined.
+          </p>
+          <p>
+            Once they finished the book, the momentum didn't stop. The group wanted to keep learning, so they moved on to
+            "Designing Data-Intensive Applications", diving into techniques for handling and creating systems capable of
+            managing millions of concurrent requests.
+          </p>
+          <p>
+            These weekend sessions soon became a habit and eventually transformed into a club, expanding beyond tech to
+            include topics like personal finance, immunology, and leadership.
+          </p>
+          <p>
+            Over time, the Upskill Club evolved to meet the interests of its members: from those early in their careers seeking
+            foundational knowledge to those in middle management aiming to enhance their roles.
+          </p>
+          <p>
+            It was clear that everyone shared a common drive - to keep learning and upskilling in life.
+          </p>
+          <p>
+            And so, the Upskill Club was born from within.
+          </p>
         </Typography>
         <Typography variant="h2" gutterBottom>
           Core Values
