@@ -68,25 +68,25 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 const courses = [{
     id: '1',
     categoryName: '',
-    title: 'Char Log Kya Seekhengey',
+    title: 'One over None',
     outline: 'At Upskill, practical learning matters over numbers',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730394349/vlikihjqivrzllhjwofo.jpg'
 }, {
     id: '2',
     categoryName: '',
-    title: 'Hum Sath Sath Hai',
+    title: 'Inclusion',
     outline: 'At Upskill, learning for all outweighs a few excelling',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730392017/wze9afbxnvwvcerneqk4.jpg'
 }, {
     id: '3',
     categoryName: '',
-    title: 'Mai bhi MASTER',
+    title: 'Collaboration',
     outline: 'At Upskill, we believe anyone with knowledge can teach.',
-    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
+    image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1730392112/c8bjy9fnviclts8wl0wb.jpg'
 }, {
     id: '4',
     categoryName: '',
-    title: 'Seekha hai to Apnao bhi',
+    title: 'Practical Learning',
     outline: 'At Upskill, learning is meant to be lived every day.',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
@@ -167,10 +167,41 @@ export default function About() {
                 borderColor: 'divider',
             }}
         />
-        <Typography variant="body1" gutterBottom>
-        On a bright evening in 2019, Anupam and Manish were working through bugs they’d sent to production at UrbanClap. As they resolved issues, they realized there was so much more to learn in tech. UrbanCompany had just adopted a microservices architecture—an exciting shift, but one that came with new complexities to master. Anupam casually asked if anyone would be interested in weekly reading sessions focused on "Building Microservices" by Sam Newman. To his surprise, several team members eagerly joined.
-Once they finished the book, the momentum didn’t stop. The group wanted to keep learning, so they moved on to "Designing Data-Intensive Applications," diving into techniques for handling and creating systems capable of managing millions of concurrent requests. These weekend sessions soon became a habit and eventually transformed into a club, expanding beyond tech to include topics like personal finance, immunology, and leadership.
-Over time, the Upskill Club evolved to meet the interests of its members: from those early in their careers seeking foundational knowledge to those in middle management aiming to enhance their roles. It was clear that everyone shared a common drive—to keep learning and upskilling in life. And so, the Upskill Club was born from within.
+        <Typography variant="body1" gutterBottom sx={{ whiteSpace: 'pre-line' }}>
+          <p>
+            On a bright evening in 2019, Anupam and Manish were working through bugs they'd sent to production at{' '}
+            <a href="https://www.urbancompany.com" target="_blank" rel="noopener noreferrer">
+              UrbanCompany
+            </a>
+            .
+          </p>
+          <p>
+            As they resolved issues, they realized there was so much more to learn in tech. UrbanCompany had just adopted a
+            microservices architecture - an exciting shift, but one that came with new complexities to master.
+          </p>
+          <p>
+            Anupam casually asked if anyone would be interested in weekly reading sessions focused on "Building Microservices"
+            by Sam Newman. To his surprise, several team members eagerly joined.
+          </p>
+          <p>
+            Once they finished the book, the momentum didn't stop. The group wanted to keep learning, so they moved on to
+            "Designing Data-Intensive Applications", diving into techniques for handling and creating systems capable of
+            managing millions of concurrent requests.
+          </p>
+          <p>
+            These weekend sessions soon became a habit and eventually transformed into a club, expanding beyond tech to
+            include topics like personal finance, immunology, and leadership.
+          </p>
+          <p>
+            Over time, the Upskill Club evolved to meet the interests of its members: from those early in their careers seeking
+            foundational knowledge to those in middle management aiming to enhance their roles.
+          </p>
+          <p>
+            It was clear that everyone shared a common drive - to keep learning and upskilling in life.
+          </p>
+          <p>
+            And so, the Upskill Club was born from within.
+          </p>
         </Typography>
         <Typography variant="h2" gutterBottom>
           Core Values
