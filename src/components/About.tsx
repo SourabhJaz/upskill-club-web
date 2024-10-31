@@ -11,6 +11,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -150,9 +152,14 @@ export function Search({ onSearch }) {
   );
 }
 export default function About() {
-  const navigate = useNavigate();
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
+        <Helmet>
+          <title>About The Upskill Club</title>
+          <meta name="description" content="The Upskill Club is a community of people who come together to learn from each other and upskill." />
+          <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Courses, Online Learning, Community, About" />
+          <link rel="canonical" href="https://www.theupskillclub.com/about" />
+        </Helmet>
         <Typography variant="h2" gutterBottom>
           Inception of The Upskill Club
         </Typography>

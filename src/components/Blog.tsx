@@ -10,7 +10,7 @@ export default function Blog() {
       <Helmet>
         <title>The Upskill Club</title>
         <meta name="description" content="Explore a variety of courses and upskill with The Upskill Club." />
-        <meta name="keywords" content="Upskill, Collaborative Learning, Courses, Online Learning" />
+        <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Courses, Online Learning" />
         <link rel="canonical" href="https://www.theupskillclub.com/" />
       </Helmet>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
