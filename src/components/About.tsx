@@ -73,26 +73,26 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 const courses = [{
     id: '1',
     categoryName: '',
-    title: 'Value 1',
-    outline: 'Encourages value 1',
+    title: 'Char Log Kya Seekhengey',
+    outline: 'At Upskill, practical learning matters over numbers',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '2',
     categoryName: '',
-    title: 'Value 2',
-    outline: 'Encourages value 2',
+    title: 'Hum Sath Sath Hai',
+    outline: 'At Upskill, learning for all outweighs a few excelling',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '3',
     categoryName: '',
-    title: 'Value 3',
-    outline: 'Encourages value 3',
+    title: 'Mai bhi MASTER',
+    outline: 'At Upskill, we believe anyone with knowledge can teach.',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '4',
     categoryName: '',
-    title: 'Value 4',
-    outline: 'Encourages value 4',
+    title: 'Seekha hai to Apnao bhi',
+    outline: 'At Upskill, learning is meant to be lived every day.',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
 
@@ -100,25 +100,25 @@ const articles = [{
     id: '1',
     categoryName: '',
     title: 'Rule 1',
-    outline: 'Be curious',
+    outline: 'Be eternally curious',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '2',
     categoryName: '',
     title: 'Rule 2',
-    outline: 'Be humble',
+    outline: 'Be humble always',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '3',
     categoryName: '',
     title: 'Rule 3',
-    outline: 'Rule 3',
+    outline: 'Never be a A-Hole',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }, {
     id: '4',
     categoryName: '',
     title: 'Rule 4',
-    outline: 'Rule 4',
+    outline: 'Respect everyones time',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
 
@@ -179,7 +179,11 @@ export default function About() {
             }}
         />
         <Typography variant="body1" gutterBottom>
-          Some lines on how it all started as a weekend learning session and then evolved to this club. Some lines on how it all started as a weekend learning session and then evolved to this club.
+        On a bright evening in 2019, Anupam and Manish were working through bugs they’d sent to production at UrbanClap. As they resolved issues, they realized there was so much more to learn in tech. UrbanCompany had just adopted a microservices architecture—an exciting shift, but one that came with new complexities to master. Anupam casually asked if anyone would be interested in weekly reading sessions focused on "Building Microservices" by Sam Newman. To his surprise, several team members eagerly joined.
+
+Once they finished the book, the momentum didn’t stop. The group wanted to keep learning, so they moved on to "Designing Data-Intensive Applications," diving into techniques for handling and creating systems capable of managing millions of concurrent requests. These weekend sessions soon became a habit and eventually transformed into a club, expanding beyond tech to include topics like personal finance, immunology, and leadership.
+
+Over time, the Upskill Club evolved to meet the interests of its members: from those early in their careers seeking foundational knowledge to those in middle management aiming to enhance their roles. It was clear that everyone shared a common drive—to keep learning and upskilling in life. And so, the Upskill Club was born from within.
         </Typography>
         <Typography variant="h2" gutterBottom>
           Core Values
