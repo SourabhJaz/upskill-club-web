@@ -65,7 +65,8 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
       transition: 'width 0.3s ease, opacity 0.3s ease',
     }
   }));
-const courses = [{
+
+const clubValues = [{
     id: '1',
     categoryName: '',
     title: 'One over None',
@@ -90,7 +91,8 @@ const courses = [{
     outline: 'At Upskill, learning is meant to be lived every day.',
     image: 'https://res.cloudinary.com/dns4wsdk8/image/upload/v1727371499/curiosity_qbczrx.jpg'
 }];
-const articles = [{
+
+const rules = [{
     id: '1',
     categoryName: '',
     title: 'Rule 1',
@@ -207,9 +209,9 @@ export default function About() {
           Core Values
         </Typography>
         {<Grid container spacing={2} columns={12}>
-          {courses.map((course, idx) => {
+          {clubValues.map((course) => {
             return (
-              <Grid size={{ xs: 6, md: 3 }} key={course.id}>
+              <Grid size={{ xs: 12, md: 3 }} key={course.id}>
                 <SyledCard
                   variant="outlined"
                 >
@@ -246,7 +248,7 @@ export default function About() {
           Rules to Join
         </Typography>
         <Grid container spacing={4} columns={12} sx={{ my: 4 }}>
-            {articles.map((article, index) => (
+            {rules.map((article, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6 }}>
                 <SyledCard>
                   <SyledCardContent>
