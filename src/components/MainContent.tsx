@@ -209,15 +209,17 @@ export default function MainContent() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <Typography variant="h1" gutterBottom>
-        The Upskill Club
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        A catalog of notes on courses being discussed within a collaborative community called{' '}
-        <ReactRouterLink to="/about" target="_blank" rel="noopener noreferrer">
+      <div>
+        <Typography variant="h1" gutterBottom>
           The Upskill Club
-        </ReactRouterLink>
-      </Typography>
+        </Typography>
+        <Typography>
+          A catalog of notes on courses being discussed within a collaborative community called{' '}
+          <ReactRouterLink to="/about" target="_blank" rel="noopener noreferrer">
+            The Upskill Club
+          </ReactRouterLink>
+        </Typography>
+      </div>
       <Box
         sx={{
           display: { xs: 'flex', sm: 'none' },

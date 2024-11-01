@@ -133,7 +133,7 @@ const AuthorProfile = () => {
             </Box>
           </Box>
           <Box>
-            <Latest title="Latest Sessions" authorId={authorId} headingVariant="h3" />
+            <Latest title="Latest Sessions" authorId={authorId} />
           </Box>
         </Box>
       </Container>

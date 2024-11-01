@@ -13,9 +13,9 @@ export default function Blog() {
         <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Professional Development, Career Growth, Online Learning" />
         <link rel="canonical" href="https://www.theupskillclub.com/" />
       </Helmet>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <MainContent />
-        <Latest title="Latest Sessions" order="desc" headingVariant="h3" />
+        <Latest title="Latest Sessions" order="desc" />
       </Box>
     </Container>
   );

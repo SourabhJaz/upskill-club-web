@@ -120,7 +120,6 @@ export default function Latest(props: {
   style?: SxProps;
   order?: string;
   displayTag?: boolean;
-  headingVariant?: TypographyOwnProps['variant'];
 }) {
   const {
     courseId,
@@ -128,8 +127,7 @@ export default function Latest(props: {
     title,
     style = { marginTop: 5 },
     order,
-    displayTag = true,
-    headingVariant = 'h2',
+    displayTag = true
   } = props;
 
   const [sessions, setSessions] = React.useState<ParsedSession[]>([]);
@@ -173,7 +171,7 @@ export default function Latest(props: {
 
   return (
     <Box sx={style}>
-      <Typography variant={headingVariant} sx={{ fontWeight: 'bold' }} gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {title}
       </Typography>
       {sessionsLoading ? (
