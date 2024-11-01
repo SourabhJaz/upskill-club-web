@@ -14,6 +14,7 @@ import { AuthorCard } from './Author';
 import { EntityParser } from '../entities';
 import { ParsedConcept, ParsedSession } from '../entities/interface';
 import MarkdownRenderer from './MarkdownRenderer';
+import { Helmet } from 'react-helmet'; // Import Helmet
 
 const getdescriptionComponent = (descriptionText: string) => {
   const formattedDescription = descriptionText.replace(/\\/g, '\n');
@@ -68,6 +69,15 @@ export default function SessionPage() {
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: { xs: '100%', md: '70%' } }}>
+      {/* Add Helmet for SEO */}
+      {sessionDetails && (
+        <Helmet>
+          <title>{sessionDetails.title} | The Upskill Club</title>
+          <meta name="description" content={sessionDetails.description} />
+          <meta name="keywords" content={`Upskill, ${sessionDetails.title}, Online Learning, Professional Development`} />
+          <link rel="canonical" href={`https://www.theupskillclub.com/session?sessionId=${id}`} />
+        </Helmet>
+      )}
       {sessionDetails && (
         <StyledCard>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -130,7 +140,7 @@ export default function SessionPage() {
           {sessionDetails.imageUrl && (
             <CardMedia
               component="img"
-              alt="green iguana"
+              alt={sessionDetails.title}
               image={sessionDetails.imageUrl}
               aspect-ratio="16 / 9"
               sx={{

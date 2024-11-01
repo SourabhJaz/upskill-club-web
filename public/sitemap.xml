@@ -2,18 +2,94 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.theupskillclub.com/</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-01</lastmod>
   </url>
   <url>
     <loc>https://www.theupskillclub.com/about</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-01</lastmod>
   </url>
   <url>
     <loc>https://www.theupskillclub.com/privacy-policy</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-01</lastmod>
   </url>
   <url>
     <loc>https://www.theupskillclub.com/terms-of-service</loc>
+    <lastmod>2024-11-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/course?courseId=4</loc>
+    <lastmod>2024-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/course?courseId=1</loc>
+    <lastmod>2024-05-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/course?courseId=3</loc>
+    <lastmod>2023-05-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/course?courseId=5</loc>
+    <lastmod>2023-02-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/course?courseId=2</loc>
+    <lastmod>2023-02-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=0</loc>
+    <lastmod>2024-05-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=1</loc>
+    <lastmod>2024-05-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=2</loc>
+    <lastmod>2024-05-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=3</loc>
+    <lastmod>2024-06-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=4</loc>
+    <lastmod>2024-06-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=5</loc>
+    <lastmod>2024-06-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=6</loc>
+    <lastmod>2024-06-30</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=7</loc>
+    <lastmod>2024-07-13</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=8</loc>
+    <lastmod>2024-08-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/session?sessionId=10</loc>
+    <lastmod>2023-02-05</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/author?authorId=1</loc>
+    <lastmod>2024-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/author?authorId=2</loc>
+    <lastmod>2024-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/author?authorId=3</loc>
+    <lastmod>2024-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://www.theupskillclub.com/author?authorId=4</loc>
     <lastmod>2024-10-30</lastmod>
   </url>
 </urlset>

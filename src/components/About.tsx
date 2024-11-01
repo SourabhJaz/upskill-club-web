@@ -155,9 +155,9 @@ export default function About() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '100%' }}>
         <Helmet>
-          <title>About The Upskill Club</title>
-          <meta name="description" content="The Upskill Club is a community of people who come together to learn from each other and upskill." />
-          <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Courses, Online Learning, Community, About" />
+          <title>About The Upskill Club | A Community for Continuous Learning</title>
+          <meta name="description" content="The Upskill Club is a vibrant community dedicated to continuous learning and professional development for individuals at all career stages." />
+          <meta name="keywords" content="Upskill, The Upskill Club, Community, Continuous Learning, Professional Development, Career Growth" />
           <link rel="canonical" href="https://www.theupskillclub.com/about" />
         </Helmet>
         <Typography variant="h2" gutterBottom>

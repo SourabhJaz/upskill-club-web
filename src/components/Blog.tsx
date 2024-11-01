@@ -8,9 +8,9 @@ export default function Blog() {
   return (
     <Container maxWidth="lg" component="main">
       <Helmet>
-        <title>The Upskill Club</title>
-        <meta name="description" content="Explore a variety of courses and upskill with The Upskill Club." />
-        <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Courses, Online Learning" />
+        <title>Join The Upskill Club | Collaborative Learning & Professional Development</title>
+        <meta name="description" content="Join The Upskill Club to enhance your career through collaborative learning. Connect with professionals at all stages and share knowledge on industry trends." />
+        <meta name="keywords" content="Upskill, The Upskill Club, Collaborative Learning, Professional Development, Career Growth, Online Learning" />
         <link rel="canonical" href="https://www.theupskillclub.com/" />
       </Helmet>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

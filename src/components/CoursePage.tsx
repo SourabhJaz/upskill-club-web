@@ -12,6 +12,7 @@ import { Utils } from '../common';
 import { ParsedCourse } from '../entities/interface';
 import { AuthorCard } from './Author';
 import { EntityParser } from '../entities';
+import { Helmet } from 'react-helmet'; // Import Helmet
 
 const renderCourseLoading = () => {
   return (
@@ -66,6 +67,13 @@ export default function CoursePage() {
     id &&
     course && (
       <Container>
+        {/* Add Helmet for SEO */}
+        <Helmet>
+          <title>{course.title} | The Upskill Club</title>
+          <meta name="description" content={course.outline} />
+          <meta name="keywords" content={`Upskill, ${course.title}, Online Learning, Professional Development`} />
+          <link rel="canonical" href={`https://www.theupskillclub.com/course?courseId=${course.id}`} />
+        </Helmet>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{ marginBottom: 1 }}>

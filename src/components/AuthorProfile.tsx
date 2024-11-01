@@ -11,6 +11,7 @@ import { UpskillClubApi } from '../apis';
 import { Utils } from '../common';
 import { Author } from '../entities/interface';
 import Latest from './Latest';
+import { Helmet } from 'react-helmet'; // Import Helmet
 
 const renderAuthorProfileLoading = () => {
   return (
@@ -71,6 +72,13 @@ const AuthorProfile = () => {
     authorId &&
     authorProfileData && (
       <Container>
+        {/* Add Helmet for SEO */}
+        <Helmet>
+          <title>{authorProfileData.name} | The Upskill Club</title>
+          <meta name="description" content={authorProfileData.outline} />
+          <meta name="keywords" content={`Upskill, ${authorProfileData.name}, Author, Online Learning, Professional Development`} />
+          <link rel="canonical" href={`https://www.theupskillclub.com/author?authorId=${authorId}`} />
+        </Helmet>
         <Box sx={{ display: 'flex', flexDirection: 'column' }} gap={4}>
           <Box sx={{ display: { xs: 'flex', sm: 'none' }, flexDirection: 'column' }}>
             <Avatar

@@ -17,20 +17,14 @@ const TermsOfService = () => {
       }}
     >
     <Helmet>
-        <title>Terms of Service | The Upskill Club</title>
-        <meta
-          name="description"
-          content="Review The Upskill Club's Terms of Service outlining guidelines for membership, responsibilities, and prohibited conduct."
-        />
-        <link rel="canonical" href="https://www.theupskillclub.com/terms-of-service" />
-        <meta property="og:title" content="Terms of Service | The Upskill Club" />
-        <meta
-          property="og:description"
-          content="Review The Upskill Club's Terms of Service outlining guidelines for membership, responsibilities, and prohibited conduct."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.theupskillclub.com/terms-of-service" />
-      </Helmet>
+      <title>Terms of Service | The Upskill Club</title>
+      <meta name="description" content="Review The Upskill Club's Terms of Service outlining guidelines for membership, responsibilities, and prohibited conduct." />
+      <link rel="canonical" href="https://www.theupskillclub.com/terms-of-service" />
+      <meta property="og:title" content="Terms of Service | The Upskill Club" />
+      <meta property="og:description" content="Review our Terms of Service for guidelines on membership and responsibilities within The Upskill Club." />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://www.theupskillclub.com/terms-of-service" />
+    </Helmet>
       <Box>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
           The Upskill Club Terms of Service

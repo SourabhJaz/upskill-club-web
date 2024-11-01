@@ -16,18 +16,12 @@ const PrivacyPolicy = () => {
         },
       }}
     >
-    <Helmet>
+      <Helmet>
         <title>Privacy Policy | The Upskill Club</title>
-        <meta
-          name="description"
-          content="Learn about The Upskill Club's Privacy Policy, including how we collect, use, and protect your personal information on our platform."
-        />
+        <meta name="description" content="Learn about The Upskill Club's Privacy Policy, including how we collect, use, and protect your personal information on our platform." />
         <link rel="canonical" href="https://www.theupskillclub.com/privacy-policy" />
         <meta property="og:title" content="Privacy Policy | The Upskill Club" />
-        <meta
-          property="og:description"
-          content="Learn about The Upskill Club's Privacy Policy, including how we collect, use, and protect your personal information on our platform."
-        />
+        <meta property="og:description" content="Learn about The Upskill Club's Privacy Policy regarding the collection and protection of your personal information." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.theupskillclub.com/privacy-policy" />
       </Helmet>
